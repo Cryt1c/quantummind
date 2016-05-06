@@ -1,4 +1,4 @@
-PImage safeBg, lockBg, knob, lock, driverPin, quantum, spring;
+PImage safeBg, lockBg, lock, driverPin, quantum, spring;
 boolean mode; // true = safe, false = lock
 int counter = 120;
 PFont f;
@@ -10,7 +10,6 @@ void setup() {
 
   safeBg = loadImage("metallic_texture.jpg");
   lockBg = loadImage("gold_texture.jpg");
-  knob = loadImage("combination-lock.png");
   driverPin = loadImage("driver_pin.png");
   quantum = loadImage("quantum_spin.png");
   spring = loadImage("coil_spring.png");
@@ -41,14 +40,15 @@ void draw() {
 
   // rotation
   translate(width/2, height/2);
-  rotate(counter * TWO_PI / 360);
   if (mode) {
-    image(knob, -100, -100, 200, 200);
+    rotate(radians(counter % 360));
+    image(quantum, -30, -50, 60, 100);
   } else {
+    rotate(radians(counter % 360 + 180));
     image(quantum, -30, -50, 60, 100);
   }
   
-  int pos = counter % 360;
+  int pos = counter + 180 % 360;
   if (pos > -10 && pos < 10) {
     // draw back spring and driver pin
     if (springDelta > 0) {
