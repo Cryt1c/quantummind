@@ -48,7 +48,7 @@ void draw() {
     image(quantum, -30, -50, 60, 100);
   }
   
-  int pos = counter + 180 % 360;
+  int pos = (counter + 180) % 360;
   if (pos > -10 && pos < 10) {
     // draw back spring and driver pin
     if (springDelta > 0) {
