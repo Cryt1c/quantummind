@@ -40,9 +40,13 @@ class Laser {
 
         this.history.push(new Point(this.xPos, this.yPos));
 
-        if (this.xPos % 1 == 0 && this.yPos % 1 == 0) {
 
-            var currentField = this.gamefield.field[this.xPos][this.yPos]
+        if (this.xPos % 1 <= STEP_SIZE && this.yPos % 1 <= STEP_SIZE) {
+
+            var x = Math.round(this.xPos);
+            var y = Math.round(this.yPos);
+            console.log(x + " : " + y);
+            var currentField = this.gamefield.field[x][y];
 
             if (currentField instanceof Mirror) {
                 if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
