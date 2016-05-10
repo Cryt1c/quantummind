@@ -33,7 +33,7 @@ void draw() {
   textFont(f);
   textAlign(CENTER);
   if (mode) {
-    text("Press 'w' or 'd' to rotate the knob, \n'space' to switch between views.", width/2, 50);
+    text("Press 'a' or 'd' to rotate the knob, \n'space' to switch between views.", width/2, 50);
   } else {
     text("Press 'space' to switch between views.\nRotation is only possible in other view.", width/2, 50);
   }
