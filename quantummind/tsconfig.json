@@ -16,6 +16,7 @@
     "ts/Detector.ts",
     "ts/Mirror.ts",
     "ts/Field.ts",
-    "ts/Laser.ts"
+    "ts/Laser.ts",
+    "ts/Block.ts"
   ]
 }

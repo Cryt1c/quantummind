@@ -59,7 +59,6 @@ var Direction;
     Direction[Direction["West"] = 3] = "West";
 })(Direction || (Direction = {}));
 var Stage = createjs.Stage;
-var Bitmap = createjs.Bitmap;
 /**
  * Created by Dominik on 10.05.2016.
  */
@@ -69,21 +68,13 @@ var GameElement = (function () {
         this.yPos = yPos;
         this.width = width;
         this.height = height;
-        this.bitmap = new createjs.Bitmap("assets/" + this.getBitmapString());
-        var img = this.bitmap.image;
-        // console.log("before: " + this.bitmap.scaleX + " " + img.width);
-        this.bitmap.scaleX = FIELD_SIZE / img.width;
-        this.bitmap.scaleY = FIELD_SIZE / img.height;
-        // console.log("after: " + this.bitmap.scaleX + " " + img.width);
     }
     ;
     GameElement.prototype.render = function (stage) {
-        this.bitmap.x = this.xPos * FIELD_SIZE;
-        this.bitmap.y = this.yPos * FIELD_SIZE;
-        // if (this instanceof Mirror) {
-        //     console.log(this.bitmap.x + " " + this.bitmap.y + " " + this.bitmap.regY);
-        // }
-        stage.addChild(this.bitmap);
+        var r = FIELD_SIZE / 2;
+        var shape = new createjs.Shape();
+        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
+        stage.addChild(shape);
     };
     ;
     return GameElement;
@@ -97,8 +88,8 @@ var Source = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
-    Source.prototype.getBitmapString = function () {
-        return "source.png";
+    Source.prototype.getColor = function () {
+        return "green";
     };
     return Source;
 }(GameElement));
@@ -111,8 +102,8 @@ var Detector = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
-    Detector.prototype.getBitmapString = function () {
-        return "detector.png";
+    Detector.prototype.getColor = function () {
+        return "yellow";
     };
     return Detector;
 }(GameElement));
@@ -125,13 +116,8 @@ var Mirror = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.alignment = alignment;
     }
-    Mirror.prototype.getBitmapString = function () {
-        if (this.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
-            return "mirror.png";
-        }
-        else {
-            return "mirror2.png";
-        }
+    Mirror.prototype.getColor = function () {
+        return "blue";
     };
     return Mirror;
 }(GameElement));
@@ -168,22 +154,104 @@ var Field = (function () {
     return Field;
 }());
 var Shape = createjs.Shape;
+var Point = createjs.Point;
 var Laser = (function () {
-    function Laser(xPos, yPos, direction) {
+    function Laser(xPos, yPos, direction, gamefield) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.direction = direction;
+        this.gamefield = gamefield;
+        this._won = false;
         this.circle = new createjs.Shape();
         this.circle.graphics.beginFill("red").drawCircle(0, 0, 50);
+        this.history = Array(new Point(xPos, yPos));
     }
     Laser.prototype.render = function (stage) {
         var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
-        circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
-        stage.addChild(circle);
+        var point;
+        for (var _i = 0, _a = this.history; _i < _a.length; _i++) {
+            point = _a[_i];
+            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 2);
+            stage.addChild(circle);
+        }
     };
     Laser.prototype.move = function () {
+        switch (this.direction) {
+            case Direction.East:
+                this.xPos += STEP_SIZE;
+                break;
+            case Direction.West:
+                this.xPos -= STEP_SIZE;
+                break;
+            case Direction.North:
+                this.yPos -= STEP_SIZE;
+                break;
+            case Direction.South:
+                this.yPos += STEP_SIZE;
+                break;
+        }
+        this.history.push(new Point(this.xPos, this.yPos));
+        var currentField = this.gamefield.field[this.xPos][this.yPos];
+        if (currentField instanceof Mirror) {
+            if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
+                if (this.direction == Direction.West) {
+                    this.direction = Direction.South;
+                }
+                else if (this.direction == Direction.East) {
+                    this.direction = Direction.North;
+                }
+                else if (this.direction == Direction.North) {
+                    this.direction = Direction.East;
+                }
+                else if (this.direction == Direction.South) {
+                    this.direction = Direction.West;
+                }
+            }
+            else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+                if (this.direction == Direction.West) {
+                    this.direction = Direction.North;
+                }
+                else if (this.direction == Direction.East) {
+                    this.direction = Direction.South;
+                }
+                else if (this.direction == Direction.North) {
+                    this.direction = Direction.West;
+                }
+                else if (this.direction == Direction.South) {
+                    this.direction = Direction.East;
+                }
+            }
+        }
+        if (currentField instanceof Detector) {
+            if (currentField.direction == this.direction) {
+                this._won = true;
+            }
+        }
     };
+    Object.defineProperty(Laser.prototype, "won", {
+        get: function () {
+            return this._won;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Laser;
 }());
+var Block = (function (_super) {
+    __extends(Block, _super);
+    function Block(xPos, yPos, alignment) {
+        _super.call(this, xPos, yPos, 1, 1);
+        this.alignment = alignment;
+    }
+    Block.prototype.getColor = function () {
+        return "black";
+    };
+    return Block;
+}(GameElement));
+var BlockAlignment;
+(function (BlockAlignment) {
+    BlockAlignment[BlockAlignment["HORIZONTAL"] = 0] = "HORIZONTAL";
+    BlockAlignment[BlockAlignment["VERTICAL"] = 1] = "VERTICAL";
+})(BlockAlignment || (BlockAlignment = {}));
 //# sourceMappingURL=core.js.map
