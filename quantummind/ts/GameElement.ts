@@ -13,7 +13,6 @@ abstract class GameElement {
         var r = FIELD_SIZE / 2;
         var shape = new createjs.Shape();
         shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
-        console.log(this.xPos + " " + this.yPos);
         stage.addChild(shape);
     };
 }
