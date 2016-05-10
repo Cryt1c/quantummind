@@ -8,4 +8,5 @@ class Field {
     constructor(public width:number, public height:number) {
         this.field = new Array[width][height];
     }
+    
 }
