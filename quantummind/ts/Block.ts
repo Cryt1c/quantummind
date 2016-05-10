@@ -3,8 +3,8 @@ class Block extends GameElement{
         super(xPos, yPos, 1, 1);
     }
 
-    getColor():string {
-        return "black";
+    getBitmapString():string {
+        return "mirror.png";
     }
 }
 
