@@ -14,6 +14,7 @@
     "ts/GameElement.ts",
     "ts/Source.ts",
     "ts/Detector.ts",
-    "ts/Mirror.ts"
+    "ts/Mirror.ts",
+    "ts/Field.ts"
   ]
 }
