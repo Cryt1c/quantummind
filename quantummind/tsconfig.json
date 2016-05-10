@@ -9,6 +9,9 @@
     "node_modules"
   ],
   "files": [
-    "ts/main.ts"
+    "ts/main.ts",
+    "ts/Direction.ts",
+    "ts/GameElement.ts",
+    "ts/Source.ts"
   ]
 }
