@@ -6,6 +6,7 @@ class Field {
     field:GameElement[][];
 
     constructor(public width:number, public height:number) {
+        this.field = [];
         for(var i: number = 0; i < this.width; i++) {
             this.field[i] = [];
             for(var j: number = 0; j< this.height; j++) {

@@ -11,7 +11,7 @@ class Laser {
     render(stage:Stage) {
         var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
-        circle.graphics.beginFill("red").drawCircle(this.xPos, this.yPos, r);
+        circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
         stage.addChild(circle);
     }
 

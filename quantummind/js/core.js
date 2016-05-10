@@ -21,6 +21,7 @@ function init() {
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
             gamefield.render(stage);
+            laser.render(stage);
             stage.update();
         }
     }
@@ -28,8 +29,9 @@ function init() {
 function keyPressed(event) {
     console.log(event.keyCode);
     switch (event.keyCode) {
-        case 'p':
+        case 80:
             createjs.Ticker.paused = !createjs.Ticker.paused;
+            console.log("pause");
             break;
     }
 }
@@ -58,7 +60,8 @@ var GameElement = (function () {
     GameElement.prototype.render = function (stage) {
         var r = FIELD_SIZE / 2;
         var shape = new createjs.Shape();
-        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos, this.yPos, r);
+        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
+        console.log(this.xPos + " " + this.yPos);
         stage.addChild(shape);
     };
     ;
@@ -118,6 +121,7 @@ var Field = (function () {
     function Field(width, height) {
         this.width = width;
         this.height = height;
+        this.field = [];
         for (var i = 0; i < this.width; i++) {
             this.field[i] = [];
             for (var j = 0; j < this.height; j++) {
@@ -149,7 +153,7 @@ var Laser = (function () {
     Laser.prototype.render = function (stage) {
         var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
-        circle.graphics.beginFill("red").drawCircle(this.xPos, this.yPos, r);
+        circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
         stage.addChild(circle);
     };
     Laser.prototype.move = function () {

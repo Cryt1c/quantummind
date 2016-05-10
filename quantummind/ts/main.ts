@@ -23,6 +23,7 @@ function init() {
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
             gamefield.render(stage);
+            laser.render(stage);
             stage.update();
         }
     }
@@ -32,8 +33,9 @@ function init() {
 function keyPressed(event) {
     console.log(event.keyCode);
     switch (event.keyCode) {
-        case 'p':
+        case 80:
             createjs.Ticker.paused = !createjs.Ticker.paused;
+            console.log("pause");
             break;
     }
 }
