@@ -13,9 +13,11 @@ function init() {
     var stage = new createjs.Stage("demoCanvas");
     createjs.Ticker.addEventListener("tick", handleTick);
     var gamefield = new Field(3, 3);
-    gamefield.field[0][2] = new Source(0, 2, Direction.East);
+    var source = new Source(0, 2, Direction.East);
+    gamefield.field[0][2] = source;
     gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
     gamefield.field[2][0] = new Detector(2, 0, Direction.South);
+    var laser = new Laser(source.xPos, source.yPos, source.direction);
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
             gamefield.render(stage);
