@@ -13,6 +13,7 @@
     "ts/Direction.ts",
     "ts/GameElement.ts",
     "ts/Source.ts",
-    "ts/Detector.ts"
+    "ts/Detector.ts",
+    "ts/Mirror.ts"
   ]
 }
