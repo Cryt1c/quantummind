@@ -6,4 +6,8 @@ class Detector extends GameElement {
     constructor(xPos:number, yPos:number, public direction: Direction) {
         super(xPos, yPos, 1, 1);
     }
+
+    getColor() {
+        return "yellow";
+    }
 }
