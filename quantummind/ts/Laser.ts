@@ -16,8 +16,8 @@ class Laser {
         var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
         var point;
-        for(point of this.history) {
-            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r/2);
+        for (point of this.history) {
+            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
             stage.addChild(circle);
         }
     }
@@ -39,42 +39,46 @@ class Laser {
         }
 
         this.history.push(new Point(this.xPos, this.yPos));
-        var currentField = this.gamefield.field[this.xPos][this.yPos]
 
-        if (currentField instanceof Mirror) {
-            if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
-                if (this.direction == Direction.West) {
-                    this.direction = Direction.South;
+        if (this.xPos % 1 == 0 && this.yPos % 1 == 0) {
+
+            var currentField = this.gamefield.field[this.xPos][this.yPos]
+
+            if (currentField instanceof Mirror) {
+                if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
+                    if (this.direction == Direction.West) {
+                        this.direction = Direction.South;
+                    }
+                    else if (this.direction == Direction.East) {
+                        this.direction = Direction.North;
+                    }
+                    else if (this.direction == Direction.North) {
+                        this.direction = Direction.East;
+                    }
+                    else if (this.direction == Direction.South) {
+                        this.direction = Direction.West;
+                    }
                 }
-                else if (this.direction == Direction.East) {
-                    this.direction = Direction.North;
-                }
-                else if (this.direction == Direction.North) {
-                    this.direction = Direction.East;
-                }
-                else if (this.direction == Direction.South) {
-                    this.direction = Direction.West;
+                else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+                    if (this.direction == Direction.West) {
+                        this.direction = Direction.North;
+                    }
+                    else if (this.direction == Direction.East) {
+                        this.direction = Direction.South;
+                    }
+                    else if (this.direction == Direction.North) {
+                        this.direction = Direction.West;
+                    }
+                    else if (this.direction == Direction.South) {
+                        this.direction = Direction.East;
+                    }
                 }
             }
-            else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
-                if (this.direction == Direction.West) {
-                    this.direction = Direction.North;
-                }
-                else if (this.direction == Direction.East) {
-                    this.direction = Direction.South;
-                }
-                else if (this.direction == Direction.North) {
-                    this.direction = Direction.West;
-                }
-                else if (this.direction == Direction.South) {
-                    this.direction = Direction.East;
-                }
-            }
-        }
 
-        if (currentField instanceof Detector) {
-            if (currentField.direction == this.direction) {
-                this._won = true;
+            if (currentField instanceof Detector) {
+                if (currentField.direction == this.direction) {
+                    this._won = true;
+                }
             }
         }
     }

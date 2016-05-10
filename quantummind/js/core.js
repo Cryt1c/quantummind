@@ -8,11 +8,10 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../definitelyTyped/preloadjs.d.ts" />
 var Ticker = createjs.Ticker;
 var FIELD_SIZE = 40;
-var STEP_SIZE = 1;
+var STEP_SIZE = 0.2;
 function init() {
     document.onkeydown = keyPressed;
     var stage = new createjs.Stage("demoCanvas");
-    createjs.Ticker.addEventListener("tick", handleTick);
     createjs.Ticker.paused = !createjs.Ticker.paused;
     var gamefield = new Field(3, 3);
     var source = new Source(0, 2, Direction.East);
@@ -22,7 +21,7 @@ function init() {
     gamefield.field[2][1] = new Block(2, 1, BlockAlignment.HORIZONTAL);
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
-    stage.update();
+    createjs.Ticker.addEventListener("tick", handleTick);
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
             laser.move();
@@ -34,18 +33,18 @@ function init() {
             }
         }
     }
-}
-function keyPressed(event) {
-    console.log(event.keyCode);
-    switch (event.keyCode) {
-        case 80:
-            createjs.Ticker.paused = !createjs.Ticker.paused;
-            console.log("pause");
-            break;
-        case 83:
-            createjs.Ticker.paused = !createjs.Ticker.paused;
-            console.log("pause");
-            break;
+    function keyPressed(event) {
+        console.log(event.keyCode);
+        switch (event.keyCode) {
+            case 80:
+                createjs.Ticker.paused = !createjs.Ticker.paused;
+                console.log("pause");
+                break;
+            case 83:
+                stage.update();
+                console.log("pause");
+                break;
+        }
     }
 }
 /**
@@ -186,7 +185,7 @@ var Laser = (function () {
         var point;
         for (var _i = 0, _a = this.history; _i < _a.length; _i++) {
             point = _a[_i];
-            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 2);
+            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
             stage.addChild(circle);
         }
     };
@@ -206,40 +205,42 @@ var Laser = (function () {
                 break;
         }
         this.history.push(new Point(this.xPos, this.yPos));
-        var currentField = this.gamefield.field[this.xPos][this.yPos];
-        if (currentField instanceof Mirror) {
-            if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
-                if (this.direction == Direction.West) {
-                    this.direction = Direction.South;
+        if (this.xPos % 1 == 0 && this.yPos % 1 == 0) {
+            var currentField = this.gamefield.field[this.xPos][this.yPos];
+            if (currentField instanceof Mirror) {
+                if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
+                    if (this.direction == Direction.West) {
+                        this.direction = Direction.South;
+                    }
+                    else if (this.direction == Direction.East) {
+                        this.direction = Direction.North;
+                    }
+                    else if (this.direction == Direction.North) {
+                        this.direction = Direction.East;
+                    }
+                    else if (this.direction == Direction.South) {
+                        this.direction = Direction.West;
+                    }
                 }
-                else if (this.direction == Direction.East) {
-                    this.direction = Direction.North;
-                }
-                else if (this.direction == Direction.North) {
-                    this.direction = Direction.East;
-                }
-                else if (this.direction == Direction.South) {
-                    this.direction = Direction.West;
+                else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+                    if (this.direction == Direction.West) {
+                        this.direction = Direction.North;
+                    }
+                    else if (this.direction == Direction.East) {
+                        this.direction = Direction.South;
+                    }
+                    else if (this.direction == Direction.North) {
+                        this.direction = Direction.West;
+                    }
+                    else if (this.direction == Direction.South) {
+                        this.direction = Direction.East;
+                    }
                 }
             }
-            else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
-                if (this.direction == Direction.West) {
-                    this.direction = Direction.North;
+            if (currentField instanceof Detector) {
+                if (currentField.direction == this.direction) {
+                    this._won = true;
                 }
-                else if (this.direction == Direction.East) {
-                    this.direction = Direction.South;
-                }
-                else if (this.direction == Direction.North) {
-                    this.direction = Direction.West;
-                }
-                else if (this.direction == Direction.South) {
-                    this.direction = Direction.East;
-                }
-            }
-        }
-        if (currentField instanceof Detector) {
-            if (currentField.direction == this.direction) {
-                this._won = true;
             }
         }
     };

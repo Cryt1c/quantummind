@@ -5,12 +5,11 @@
 import Ticker = createjs.Ticker;
 
 const FIELD_SIZE = 40;
-const STEP_SIZE = 1;
+const STEP_SIZE = 0.2;
 
 function init() {
     document.onkeydown = keyPressed;
     var stage = new createjs.Stage("demoCanvas");
-    createjs.Ticker.addEventListener("tick", handleTick);
     createjs.Ticker.paused = !createjs.Ticker.paused;
     var gamefield = new Field(3, 3);
 
@@ -21,7 +20,7 @@ function init() {
     gamefield.field[2][1] = new Block(2, 1, BlockAlignment.HORIZONTAL);
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
-    stage.update();
+    createjs.Ticker.addEventListener("tick", handleTick);
 
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
@@ -35,19 +34,19 @@ function init() {
         }
     }
 
-}
-
-function keyPressed(event) {
-    console.log(event.keyCode);
-    switch (event.keyCode) {
-        case 80:
-            createjs.Ticker.paused = !createjs.Ticker.paused;
-            console.log("pause");
-            break;
-        case 83:
-            createjs.Ticker.paused = !createjs.Ticker.paused;
-            console.log("pause");
-            break;
-
+    function keyPressed(event) {
+        console.log(event.keyCode);
+        switch (event.keyCode) {
+            case 80:
+                createjs.Ticker.paused = !createjs.Ticker.paused;
+                console.log("pause");
+                break;
+            case 83:
+                stage.update();
+                console.log("pause");
+                break;
+        }
     }
+
 }
+
