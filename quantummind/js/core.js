@@ -118,12 +118,20 @@ var Field = (function () {
     function Field(width, height) {
         this.width = width;
         this.height = height;
-        this.field = new Array[width][height];
+        for (var i = 0; i < this.width; i++) {
+            this.field[i] = [];
+            for (var j = 0; j < this.height; j++) {
+                this.field[i][j] = null;
+            }
+        }
     }
     Field.prototype.render = function (stage) {
         for (var i = 0; i < this.width; i++) {
             for (var j = 0; j < this.height; j++) {
-                this.field[i][j].render(stage);
+                var elem = this.field[i][j];
+                if (elem != null) {
+                    elem.render(stage);
+                }
             }
         }
     };
