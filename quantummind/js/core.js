@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../definitelyTyped/jquery.d.ts" />
 /// <reference path="../definitelyTyped/preloadjs.d.ts" />
 var Ticker = createjs.Ticker;
+var FIELD_SIZE = 40;
 function init() {
     document.onkeydown = keyPressed;
     var stage = new createjs.Stage("demoCanvas");
@@ -52,7 +53,12 @@ var GameElement = (function () {
         this.height = height;
     }
     ;
-    GameElement.prototype.render = function (stage) { };
+    GameElement.prototype.render = function (stage) {
+        var r = FIELD_SIZE / 2;
+        var shape = new createjs.Shape();
+        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos + r, this.yPos + r, r);
+        stage.addChild(shape);
+    };
     ;
     return GameElement;
 }());
@@ -65,6 +71,9 @@ var Source = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
+    Source.prototype.getColor = function () {
+        return "green";
+    };
     return Source;
 }(GameElement));
 /**
@@ -76,6 +85,9 @@ var Detector = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
+    Detector.prototype.getColor = function () {
+        return "yellow";
+    };
     return Detector;
 }(GameElement));
 /**
@@ -87,6 +99,9 @@ var Mirror = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.alignment = alignment;
     }
+    Mirror.prototype.getColor = function () {
+        return "blue";
+    };
     return Mirror;
 }(GameElement));
 var Alignment;
@@ -122,7 +137,7 @@ var Laser = (function () {
         this.circle.graphics.beginFill("red").drawCircle(0, 0, 50);
     }
     Laser.prototype.render = function (stage) {
-        var r = 40 / 2;
+        var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
         circle.graphics.beginFill("red").drawCircle(this.xPos, this.yPos, r);
         stage.addChild(circle);
