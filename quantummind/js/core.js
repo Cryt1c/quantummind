@@ -58,7 +58,7 @@ var GameElement = (function () {
     GameElement.prototype.render = function (stage) {
         var r = FIELD_SIZE / 2;
         var shape = new createjs.Shape();
-        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos + r, this.yPos + r, r);
+        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos, this.yPos, r);
         stage.addChild(shape);
     };
     ;
