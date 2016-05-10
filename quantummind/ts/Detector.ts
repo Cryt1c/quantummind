@@ -7,7 +7,7 @@ class Detector extends GameElement {
         super(xPos, yPos, 1, 1);
     }
 
-    getColor() {
-        return "yellow";
+    getBitmapString() {
+        return "detector.png";
     }
 }

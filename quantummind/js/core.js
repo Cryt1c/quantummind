@@ -46,6 +46,7 @@ var Direction;
     Direction[Direction["West"] = 3] = "West";
 })(Direction || (Direction = {}));
 var Stage = createjs.Stage;
+var Bitmap = createjs.Bitmap;
 /**
  * Created by Dominik on 10.05.2016.
  */
@@ -55,14 +56,21 @@ var GameElement = (function () {
         this.yPos = yPos;
         this.width = width;
         this.height = height;
+        this.bitmap = new createjs.Bitmap("assets/" + this.getBitmapString());
+        var img = this.bitmap.image;
+        // console.log("before: " + this.bitmap.scaleX + " " + img.width);
+        this.bitmap.scaleX = FIELD_SIZE / img.width;
+        this.bitmap.scaleY = FIELD_SIZE / img.height;
+        // console.log("after: " + this.bitmap.scaleX + " " + img.width);
     }
     ;
     GameElement.prototype.render = function (stage) {
-        var r = FIELD_SIZE / 2;
-        var shape = new createjs.Shape();
-        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
-        console.log(this.xPos + " " + this.yPos);
-        stage.addChild(shape);
+        this.bitmap.x = this.xPos * FIELD_SIZE;
+        this.bitmap.y = this.yPos * FIELD_SIZE;
+        // if (this instanceof Mirror) {
+        //     console.log(this.bitmap.x + " " + this.bitmap.y + " " + this.bitmap.regY);
+        // }
+        stage.addChild(this.bitmap);
     };
     ;
     return GameElement;
@@ -76,8 +84,8 @@ var Source = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
-    Source.prototype.getColor = function () {
-        return "green";
+    Source.prototype.getBitmapString = function () {
+        return "source.png";
     };
     return Source;
 }(GameElement));
@@ -90,8 +98,8 @@ var Detector = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
     }
-    Detector.prototype.getColor = function () {
-        return "yellow";
+    Detector.prototype.getBitmapString = function () {
+        return "detector.png";
     };
     return Detector;
 }(GameElement));
@@ -104,8 +112,13 @@ var Mirror = (function (_super) {
         _super.call(this, xPos, yPos, 1, 1);
         this.alignment = alignment;
     }
-    Mirror.prototype.getColor = function () {
-        return "blue";
+    Mirror.prototype.getBitmapString = function () {
+        if (this.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+            return "mirror.png";
+        }
+        else {
+            return "mirror2.png";
+        }
     };
     return Mirror;
 }(GameElement));

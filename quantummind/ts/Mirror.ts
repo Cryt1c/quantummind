@@ -7,8 +7,12 @@ class Mirror extends GameElement {
         super(xPos, yPos, 1, 1);
     }
 
-    getColor() {
-        return "blue";
+    getBitmapString() {
+        if (this.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+            return "mirror.png";
+        } else {
+            return "mirror2.png";
+        }
     }
 }
 

@@ -7,7 +7,7 @@ class Source extends GameElement {
         super(xPos, yPos, 1, 1);
     }
 
-    getColor() {
-        return "green";
+    getBitmapString() {
+        return "source.png";
     }
 }

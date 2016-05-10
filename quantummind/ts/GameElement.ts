@@ -1,19 +1,28 @@
 import Stage = createjs.Stage;
+import Bitmap = createjs.Bitmap;
 /**
  * Created by Dominik on 10.05.2016.
  */
 
 abstract class GameElement {
+    bitmap: Bitmap;
     constructor(public xPos:number, public yPos:number, public width:number, public height:number) {
+        this.bitmap = new createjs.Bitmap("assets/" + this.getBitmapString());
+        var img = this.bitmap.image;
+        // console.log("before: " + this.bitmap.scaleX + " " + img.width);
+        this.bitmap.scaleX = FIELD_SIZE / img.width;
+        this.bitmap.scaleY = FIELD_SIZE / img.height;
+        // console.log("after: " + this.bitmap.scaleX + " " + img.width);
     };
 
-    abstract getColor():string;
+    abstract getBitmapString(): string;
 
     render(stage:Stage) {
-        var r = FIELD_SIZE / 2;
-        var shape = new createjs.Shape();
-        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r);
-        console.log(this.xPos + " " + this.yPos);
-        stage.addChild(shape);
+        this.bitmap.x = this.xPos * FIELD_SIZE;
+        this.bitmap.y = this.yPos * FIELD_SIZE;
+        // if (this instanceof Mirror) {
+        //     console.log(this.bitmap.x + " " + this.bitmap.y + " " + this.bitmap.regY);
+        // }
+        stage.addChild(this.bitmap);
     };
 }
