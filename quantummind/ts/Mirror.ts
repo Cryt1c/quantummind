@@ -6,6 +6,10 @@ class Mirror extends GameElement {
     constructor(xPos:number, yPos:number, public alignment:Alignment) {
         super(xPos, yPos, 1, 1);
     }
+
+    getColor() {
+        return "blue";
+    }
 }
 
 enum Alignment{

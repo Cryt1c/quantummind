@@ -6,5 +6,12 @@ import Stage = createjs.Stage;
 abstract class GameElement {
     constructor(public xPos:number, public yPos:number, public width:number, public height:number) {};
 
-    render(stage: Stage) {};
+    abstract getColor():string;
+
+    render(stage: Stage) {
+        var r = FIELD_SIZE / 2;
+        var shape = new createjs.Shape();
+        shape.graphics.beginFill(this.getColor()).drawCircle(this.xPos + r, this.yPos + r, r);
+        stage.addChild(shape);
+    };
 }
