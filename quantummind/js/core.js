@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../definitelyTyped/jquery.d.ts" />
 /// <reference path="../definitelyTyped/preloadjs.d.ts" />
 var Ticker = createjs.Ticker;
-var FIELD_SIZE = 40;
-var STEP_SIZE = 0.2;
+var FIELD_SIZE = 100;
+var STEP_SIZE = 0.1;
 function init() {
     document.onkeydown = keyPressed;
     var stage = new createjs.Stage("demoCanvas");

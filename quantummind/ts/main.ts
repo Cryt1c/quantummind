@@ -4,8 +4,8 @@
 
 import Ticker = createjs.Ticker;
 
-const FIELD_SIZE = 40;
-const STEP_SIZE = 0.2;
+const FIELD_SIZE = 100;
+const STEP_SIZE = 0.1;
 
 function init() {
     document.onkeydown = keyPressed;
