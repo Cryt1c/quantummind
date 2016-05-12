@@ -13,7 +13,7 @@ function init() {
     createjs.Ticker.paused = !createjs.Ticker.paused;
     var gamefield = new Field(3, 3);
 
-    var source = new Source(0, 2, Direction.East);
+    var source = new Emitter(0, 2, Direction.East);
     gamefield.field[0][2] = source;
     gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
     gamefield.field[2][0] = new Detector(2, 0, Direction.North);

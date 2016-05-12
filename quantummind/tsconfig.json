@@ -12,7 +12,7 @@
     "ts/main.ts",
     "ts/Direction.ts",
     "ts/GameElement.ts",
-    "ts/Source.ts",
+    "ts/Emitter.ts",
     "ts/Detector.ts",
     "ts/Mirror.ts",
     "ts/Field.ts",

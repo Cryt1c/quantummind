@@ -14,7 +14,7 @@ function init() {
     var stage = new createjs.Stage("demoCanvas");
     createjs.Ticker.paused = !createjs.Ticker.paused;
     var gamefield = new Field(3, 3);
-    var source = new Source(0, 2, Direction.East);
+    var source = new Emitter(0, 2, Direction.East);
     gamefield.field[0][2] = source;
     gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
     gamefield.field[2][0] = new Detector(2, 0, Direction.North);
@@ -92,14 +92,14 @@ var GameElement = (function () {
 /**
  * Created by Dominik on 10.05.2016.
  */
-var Source = (function (_super) {
-    __extends(Source, _super);
-    function Source(xPos, yPos, direction) {
+var Emitter = (function (_super) {
+    __extends(Emitter, _super);
+    function Emitter(xPos, yPos, direction) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
-        _super.prototype.initBitmap.call(this, "source.png");
+        _super.prototype.initBitmap.call(this, "emitter.png");
     }
-    return Source;
+    return Emitter;
 }(GameElement));
 /**
  * Created by Dominik on 10.05.2016.
