@@ -64,7 +64,7 @@ class Laser {
                         this.direction = Direction.West;
                     }
                 }
-                else if (currentField.alignment = Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+                else if (currentField.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.North;
                     }
