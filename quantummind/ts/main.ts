@@ -5,7 +5,7 @@
 import Ticker = createjs.Ticker;
 
 const FIELD_SIZE = 40;
-const STEP_SIZE = 0.2;
+const STEP_SIZE = 0.1;
 
 function init() {
     document.onkeydown = keyPressed;
@@ -17,7 +17,7 @@ function init() {
     gamefield.field[0][2] = source;
     gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
     gamefield.field[2][0] = new Detector(2, 0, Direction.North);
-    gamefield.field[2][1] = new Block(2, 1, BlockAlignment.HORIZONTAL);
+    gamefield.field[2][1] = new Mirror(2, 1, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT);
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
     createjs.Ticker.addEventListener("tick", handleTick);
