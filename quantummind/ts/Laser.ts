@@ -36,6 +36,9 @@ class Laser {
             case Direction.South:
                 this.yPos += STEP_SIZE;
                 break;
+            default:
+                // do nothing
+                break;
         }
 
         this.history.push(new Point(this.xPos, this.yPos));
@@ -80,10 +83,15 @@ class Laser {
                 }
             }
 
-            if (currentField instanceof Detector) {
+            else if (currentField instanceof Detector) {
                 if (currentField.direction == this.direction) {
                     this._won = true;
+                    this.direction = null;
                 }
+            }
+
+            else if (currentField instanceof Block) {
+                this.direction = null;
             }
         }
     }
