@@ -49,6 +49,7 @@ class Laser {
             var currentField = this.gamefield.field[x][y];
 
             if (currentField instanceof Mirror) {
+                console.log("field alignment: " + currentField.alignment + " laserdirection: " + this.direction);
                 if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.South;
