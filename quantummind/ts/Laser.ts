@@ -36,6 +36,9 @@ class Laser {
             case Direction.South:
                 this.yPos += STEP_SIZE;
                 break;
+            default:
+                // do nothing
+                break;
         }
 
         this.history.push(new Point(this.xPos, this.yPos));
@@ -46,6 +49,13 @@ class Laser {
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);
             console.log(x + " : " + y);
+
+            if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
+                // prevent laser from going off-grid
+                this.direction = null;
+                return;
+            }
+
             var currentField = this.gamefield.field[x][y];
 
             if (currentField instanceof Mirror) {
@@ -80,10 +90,15 @@ class Laser {
                 }
             }
 
-            if (currentField instanceof Detector) {
+            else if (currentField instanceof Detector) {
                 if (currentField.direction == this.direction) {
                     this._won = true;
+                    this.direction = null;
                 }
+            }
+
+            else if (currentField instanceof Block) {
+                this.direction = null;
             }
         }
     }
