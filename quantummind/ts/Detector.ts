@@ -5,9 +5,6 @@
 class Detector extends GameElement {
     constructor(xPos:number, yPos:number, public direction: Direction) {
         super(xPos, yPos, 1, 1);
-    }
-
-    getBitmapString() {
-        return "detector.png";
+        super.initBitmap("detector.png");
     }
 }

@@ -7,7 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../definitelyTyped/jquery.d.ts" />
 /// <reference path="../definitelyTyped/preloadjs.d.ts" />
 var Ticker = createjs.Ticker;
-var FIELD_SIZE = 100;
+var FIELD_SIZE = 40;
 var STEP_SIZE = 0.1;
 function init() {
     document.onkeydown = keyPressed;
@@ -18,7 +18,7 @@ function init() {
     gamefield.field[0][2] = source;
     gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
     gamefield.field[2][0] = new Detector(2, 0, Direction.North);
-    gamefield.field[2][1] = new Block(2, 1, BlockAlignment.HORIZONTAL);
+    gamefield.field[2][1] = new Mirror(2, 1, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT);
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
     createjs.Ticker.addEventListener("tick", handleTick);
@@ -68,14 +68,16 @@ var GameElement = (function () {
         this.yPos = yPos;
         this.width = width;
         this.height = height;
-        this.bitmap = new createjs.Bitmap("assets/" + this.getBitmapString());
+    }
+    ;
+    GameElement.prototype.initBitmap = function (bitmapPath) {
+        this.bitmap = new createjs.Bitmap("assets/" + bitmapPath);
         var img = this.bitmap.image;
         // console.log("before: " + this.bitmap.scaleX + " " + img.width);
         this.bitmap.scaleX = FIELD_SIZE / img.width;
         this.bitmap.scaleY = FIELD_SIZE / img.height;
         // console.log("after: " + this.bitmap.scaleX + " " + img.width);
-    }
-    ;
+    };
     GameElement.prototype.render = function (stage) {
         this.bitmap.x = this.xPos * FIELD_SIZE;
         this.bitmap.y = this.yPos * FIELD_SIZE;
@@ -95,10 +97,8 @@ var Source = (function (_super) {
     function Source(xPos, yPos, direction) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
+        _super.prototype.initBitmap.call(this, "source.png");
     }
-    Source.prototype.getBitmapString = function () {
-        return "source.png";
-    };
     return Source;
 }(GameElement));
 /**
@@ -109,10 +109,8 @@ var Detector = (function (_super) {
     function Detector(xPos, yPos, direction) {
         _super.call(this, xPos, yPos, 1, 1);
         this.direction = direction;
+        _super.prototype.initBitmap.call(this, "detector.png");
     }
-    Detector.prototype.getBitmapString = function () {
-        return "detector.png";
-    };
     return Detector;
 }(GameElement));
 /**
@@ -123,15 +121,13 @@ var Mirror = (function (_super) {
     function Mirror(xPos, yPos, alignment) {
         _super.call(this, xPos, yPos, 1, 1);
         this.alignment = alignment;
-    }
-    Mirror.prototype.getBitmapString = function () {
-        if (this.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
-            return "mirror.png";
+        if (this.alignment === Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+            _super.prototype.initBitmap.call(this, "mirror.png");
         }
         else {
-            return "mirror2.png";
+            _super.prototype.initBitmap.call(this, "mirror2.png");
         }
-    };
+    }
     return Mirror;
 }(GameElement));
 var Alignment;
