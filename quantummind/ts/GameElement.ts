@@ -7,15 +7,16 @@ import Bitmap = createjs.Bitmap;
 abstract class GameElement {
     bitmap: Bitmap;
     constructor(public xPos:number, public yPos:number, public width:number, public height:number) {
-        this.bitmap = new createjs.Bitmap("assets/" + this.getBitmapString());
+    };
+
+    initBitmap(bitmapPath: string) {
+        this.bitmap = new createjs.Bitmap("assets/" + bitmapPath);
         var img = this.bitmap.image;
         // console.log("before: " + this.bitmap.scaleX + " " + img.width);
         this.bitmap.scaleX = FIELD_SIZE / img.width;
         this.bitmap.scaleY = FIELD_SIZE / img.height;
         // console.log("after: " + this.bitmap.scaleX + " " + img.width);
-    };
-
-    abstract getBitmapString(): string;
+    }
 
     render(stage:Stage) {
         this.bitmap.x = this.xPos * FIELD_SIZE;
