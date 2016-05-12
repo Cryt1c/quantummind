@@ -1,10 +1,8 @@
 class Block extends GameElement{
     constructor(xPos:number, yPos:number, public alignment:BlockAlignment) {
         super(xPos, yPos, 1, 1);
-    }
-
-    getBitmapString():string {
-        return "mirror.png";
+        // TODO use different bitmaps for different alignments
+        super.initBitmap("block.png");
     }
 }
 
