@@ -49,6 +49,13 @@ class Laser {
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);
             console.log(x + " : " + y);
+
+            if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
+                // prevent laser from going off-grid
+                this.direction = null;
+                return;
+            }
+
             var currentField = this.gamefield.field[x][y];
 
             if (currentField instanceof Mirror) {
