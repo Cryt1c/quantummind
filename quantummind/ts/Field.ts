@@ -1,11 +1,9 @@
 /**
  * Created by Dominik on 10.05.2016.
  */
-
 class Field {
     field:GameElement[][];
     private _source:Emitter;
-
     constructor(public width:number, public height:number) {
         this.field = [];
         for (var i:number = 0; i < this.width; i++) {
@@ -15,7 +13,6 @@ class Field {
             }
         }
     }
-
     render(stage:Stage) {
         for (var i = 0; i < this.width; i++) {
             for (var j = 0; j < this.height; j++) {
@@ -26,11 +23,10 @@ class Field {
             }
         }
     }
-    
+
     get source():Emitter {
         return this._source;
     }
-
     setSource(xPos:number, yPos:number, emitter:Emitter) {
         this.field[xPos][yPos] = emitter;
         this._source = emitter;
