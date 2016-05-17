@@ -46,7 +46,7 @@ function init() {
                 else if (laser.gameOver) {
                     console.log("gameover");
                     createjs.Ticker.paused = true;
-                    label.text = "Gameover! Press 'r' to restart the game";
+                    label.text = "Gameover! Press 'r' to restart the leve";
                     stage.update();
                 }
             }
@@ -68,7 +68,7 @@ function init() {
             case 82:
                 stage.removeAllChildren();
                 laser.blink = false;
-                createLevel(1);
+                createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
                 break;
