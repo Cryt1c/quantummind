@@ -1,7 +1,6 @@
 /**
  * Created by Dominik on 10.05.2016.
  */
-
 class Field {
     field:GameElement[][];
     private _source:Emitter;

@@ -2,6 +2,7 @@ import Shape = createjs.Shape;
 import Point = createjs.Point;
 
 class Laser {
+
     public circle:Shape;
     private _won = false;
     private _gameOver = false;
@@ -47,28 +48,21 @@ class Laser {
                 // do nothing
                 break;
         }
-
         this.history.push(new Point(this.xPos, this.yPos));
-
-
         if (this.xPos % 1 <= STEP_SIZE && this.yPos % 1 <= STEP_SIZE) {
-
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);
             console.log(x + " : " + y);
-
             if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
                 // prevent laser from going off-grid
                 this.direction = null;
                 this._gameOver = true;
                 return;
             }
-
             var currentField = this.gamefield.field[x][y];
-
             if (currentField instanceof Mirror) {
-                console.log("field alignment: " + currentField.alignment + " laserdirection: " + this.direction);
-                if (currentField.alignment == Alignment.BOTTOM_LEFT_TO_TOP_RIGHT) {
+                console.log("field alignment: " + currentField.orientation + " laserdirection: " + this.direction);
+                if (currentField.orientation == 1) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.South;
                     }
@@ -82,7 +76,7 @@ class Laser {
                         this.direction = Direction.West;
                     }
                 }
-                else if (currentField.alignment == Alignment.TOP_LEFT_TO_BOTTOM_RIGHT) {
+                else if (currentField.orientation == 0) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.North;
                     }
@@ -97,25 +91,20 @@ class Laser {
                     }
                 }
             }
-
             else if (currentField instanceof Detector) {
                 if (currentField.direction == this.direction) {
                     this._won = true;
                     this.direction = null;
                 }
             }
-
             else if (currentField instanceof Block) {
                 this.direction = null;
             }
         }
     }
-
-
     get won():boolean {
         return this._won;
     }
-
     get gameOver():boolean {
         return this._gameOver;
     }
