@@ -4,7 +4,7 @@
 
 import Ticker = createjs.Ticker;
 
-const FIELD_SIZE = 40;
+const FIELD_SIZE = 50;
 const STEP_SIZE = 0.1;
 const QUEUE = new createjs.LoadQueue(false);
 
@@ -134,6 +134,16 @@ function init() {
         }
 
         gamefield.render(stage);
+
+        var border = new createjs.Shape();
+        border.graphics.beginStroke("black");
+        border.graphics.setStrokeStyle(2);
+        border.snapToPixel = true;
+        var xLength = gamefield.field.length * FIELD_SIZE;
+        var yLength= gamefield.field[0].length * FIELD_SIZE;
+        border.graphics.drawRect(0, 0, xLength, yLength);
+        stage.addChild(border);
+
         label.y = gamefield.height * FIELD_SIZE + 10;
         stage.addChild(label);
 
