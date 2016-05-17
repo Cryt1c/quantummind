@@ -13,7 +13,7 @@ function init() {
     var stage = new createjs.Stage("demoCanvas");
     var laser;
     var label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
-    var currentLevel = 2;
+    var currentLevel = 1;
     var blinkShape = new createjs.Shape();
     blinkShape.graphics.beginFill("black").drawRect(0, 0, 500, 500);
 
@@ -157,11 +157,11 @@ function init() {
                 gamefield = new Field(9, 5);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(source);
-                gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 3, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
                 gamefield.add(new Mirror(stage, 0, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-                gamefield.add(new Mirror(stage, 8, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-                gamefield.add(new Mirror(stage, 0, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-                gamefield.add(new Mirror(stage, 3, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 8, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 0, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 3, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
                 gamefield.add(new Block(stage, 6, 4));
                 gamefield.add(new Detector(stage, 8, 4));
                 laser = new Laser(gamefield);
