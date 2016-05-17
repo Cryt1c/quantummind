@@ -56,7 +56,7 @@ class Laser {
         if(this.blink) return;
 
         console.log(this.xPos + " " + this.yPos);
-        if (this.xPos % 1 < STEP_SIZE && this.yPos % 1 < STEP_SIZE) {
+        if (Math.abs(this.xPos % 1) < STEP_SIZE && Math.abs(this.yPos % 1) < STEP_SIZE) {
 
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);

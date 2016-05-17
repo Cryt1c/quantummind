@@ -46,7 +46,7 @@ function init() {
                 else if (laser.gameOver) {
                     console.log("gameover");
                     createjs.Ticker.paused = true;
-                    label.text = "Gameover! Press 'r' to restart the game";
+                    label.text = "Gameover! Press 'r' to restart the leve";
                     stage.update();
                 }
             }
@@ -68,7 +68,7 @@ function init() {
             case 82:
                 stage.removeAllChildren();
                 laser.blink = false;
-                createLevel(1);
+                createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
                 break;
@@ -107,14 +107,14 @@ function init() {
                 gamefield.add(new Mirror(stage, 2, 0, 0));
                 gamefield.add(new Detector(stage, 2, 2));
                 laser = new Laser(gamefield);
-                label.text = "Mirrors reflect the laser particles.";
+                label.text = "A mirror (the blue bar on the top right) reflects the laser.";
                 break;
 
             case 3:
                 gamefield = new Field(3, 3);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(0, 0, source);
-                gamefield.add(new Mirror(stage, 0, 2, 1));
+                gamefield.add(new Mirror(stage, 2, 0, 1));
                 gamefield.add(new Detector(stage, 2, 2));
                 laser = new Laser(gamefield);
                 label.text = "Click on the mirror to rotate it.";
