@@ -27,9 +27,9 @@ function init() {
             laser.move();
             laser.render(stage);
             stage.update();
-            if(laser.won) {
+            if(laser.won || laser.gameOver) {
                 createjs.Ticker.paused = true;
-                console.log("won");
+                console.log("won or gameover");
             }
         }
     }
