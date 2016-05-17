@@ -107,7 +107,7 @@ function init() {
                 gamefield.add(new Mirror(stage, 2, 0, 0));
                 gamefield.add(new Detector(stage, 2, 2));
                 laser = new Laser(gamefield);
-                label.text = "Mirrors reflect the laser particles.";
+                label.text = "A mirror (the blue bar on the top right) reflects the laser.";
                 break;
 
             case 3:
