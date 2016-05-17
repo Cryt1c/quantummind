@@ -80,6 +80,7 @@ function init() {
                 else {
                     stage.removeChild(blinkShape);
                 }
+                stage.update();
                 break;
         }
     }
