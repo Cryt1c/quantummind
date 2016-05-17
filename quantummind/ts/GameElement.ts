@@ -20,13 +20,23 @@ abstract class GameElement {
 
     rotate( orientation:number, bitmaps: string[] ) {
 
-        this.bitmap = new createjs.Bitmap("assets/" + bitmaps[orientation]);
+        this.stage.removeChild(this.bitmap);
+
         this.orientation = orientation;
 
+        var image = QUEUE.getResult(bitmaps[orientation]);
+        this.bitmap = new createjs.Bitmap(image);
         var img = this.bitmap.image;
         this.bitmap.scaleX = FIELD_SIZE / img.width;
         this.bitmap.scaleY = FIELD_SIZE / img.height;
-        
+
+
+        this.stage.addChild(this.bitmap);/*.addEventListener('stagemousedown',function(event){
+            console.log('mousedown',event.target);*/
+        //});
+        this.render(this.stage);
+        this.stage.update();
+
     }
 
     render(stage:Stage) {

@@ -39,12 +39,11 @@ function init() {
                 laser.render(stage);
                 stage.update();
                 if (laser.won) {
-                    console.log("won");
+                    //console.log("won");
                     createjs.Ticker.paused = true;
-                    createLevel(++currentLevel);
                 }
                 else if (laser.gameOver) {
-                    console.log("gameover");
+                    //console.log("gameover");
                     createjs.Ticker.paused = true;
                     label.text = "Game over! Press 'r' to restart the level.";
                     stage.update();
@@ -54,9 +53,12 @@ function init() {
     }
 
     function keyPressed(event) {
-        console.log(event.keyCode);
+        //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
+                if( laser.won ){
+                    createLevel(++currentLevel);
+                }
                 stage.update();
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
@@ -89,6 +91,7 @@ function init() {
         var gamefield;
         var instructions;
         stage.removeAllChildren();
+        stage.removeAllEventListeners();
         switch (level) {
             case 1:
                 gamefield = new Field(3, 1);
@@ -176,6 +179,17 @@ function init() {
 
         label.y = gamefield.height * FIELD_SIZE + 10;
         stage.addChild(label);
+
+        stage.addEventListener("stagemousedown", handleClick);
+
+        function handleClick(event){
+
+            var elem = gamefield.getElement( event.stageX, event.stageY );
+
+            if( elem instanceof Mirror ){
+                elem.rotateMirror();
+            }
+        }
 
     }
 
