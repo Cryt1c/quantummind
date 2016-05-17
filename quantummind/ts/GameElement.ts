@@ -10,7 +10,8 @@ abstract class GameElement {
     };
 
     initBitmap(bitmapPath: string) {
-        this.bitmap = new createjs.Bitmap("assets/" + bitmapPath);
+        var image = QUEUE.getResult(bitmapPath);
+        this.bitmap = new createjs.Bitmap(image);
         var img = this.bitmap.image;
         // console.log("before: " + this.bitmap.scaleX + " " + img.width);
         this.bitmap.scaleX = FIELD_SIZE / img.width;
@@ -26,4 +27,6 @@ abstract class GameElement {
         // }
         stage.addChild(this.bitmap);
     };
+    
+    
 }
