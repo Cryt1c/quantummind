@@ -93,7 +93,7 @@ function init() {
             case 1:
                 gamefield = new Field(3, 1);
                 var source = new Emitter(stage, 0, 0, Direction.East);
-                gamefield.setSource(0, 0, source);
+                gamefield.setSource(source);
                 gamefield.add(new Detector(stage, 2, 0));
                 laser = new Laser(gamefield);
                 label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
