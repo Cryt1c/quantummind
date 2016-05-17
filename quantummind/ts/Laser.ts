@@ -9,6 +9,7 @@ class Laser {
     private xPos;
     private yPos;
     private direction;
+    private _blink;
 
     constructor(public gamefield:Field) {
         this.xPos = gamefield.source.xPos;
@@ -17,9 +18,11 @@ class Laser {
         this.circle = new createjs.Shape();
         this.circle.graphics.beginFill("red").drawCircle(0, 0, 50);
         this.history = Array(new Point(this.xPos, this.yPos));
+        this.blink = false;
     }
 
     render(stage:Stage) {
+        if(this.blink) return;
         var r = FIELD_SIZE / 2;
         var circle = new createjs.Shape();
         var point;
@@ -50,6 +53,7 @@ class Laser {
 
         this.history.push(new Point(this.xPos, this.yPos));
 
+        if(this.blink) return;
 
         if (this.xPos % 1 <= STEP_SIZE && this.yPos % 1 <= STEP_SIZE) {
 
@@ -106,7 +110,8 @@ class Laser {
             }
 
             else if (currentField instanceof Block) {
-                this.direction = null;
+                    this.direction = null;
+                    this._gameOver = true;
             }
         }
     }
@@ -118,5 +123,13 @@ class Laser {
 
     get gameOver():boolean {
         return this._gameOver;
+    }
+
+    get blink() {
+        return this._blink;
+    }
+
+    set blink(value) {
+        this._blink = value;
     }
 }
