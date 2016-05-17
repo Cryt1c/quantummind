@@ -11,15 +11,15 @@ function init() {
     document.onkeydown = keyPressed;
     var stage = new createjs.Stage("demoCanvas");
     createjs.Ticker.paused = !createjs.Ticker.paused;
-    var gamefield = new Field(3, 3);
+    var laser;
+    var label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
+    label.lineWidth = 500;
+    stage.addChild(label);
+    stage.update();
+    var currentLevel = 1;
 
-    var source = new Emitter(0, 2, Direction.East);
-    gamefield.field[0][2] = source;
-    gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
-    gamefield.field[2][0] = new Detector(2, 0, Direction.North);
-    gamefield.field[2][1] = new Mirror(2, 1, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT);
-    var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
-    gamefield.render(stage);
+    createLevel(currentLevel);
+
     createjs.Ticker.addEventListener("tick", handleTick);
 
     function handleTick(event) {
@@ -27,7 +27,7 @@ function init() {
             laser.move();
             laser.render(stage);
             stage.update();
-            if(laser.won || laser.gameOver) {
+            if (laser.won || laser.gameOver) {
                 createjs.Ticker.paused = true;
                 console.log("won or gameover");
             }
@@ -38,6 +38,7 @@ function init() {
         console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
+                stage.update();
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
                 break;
@@ -46,6 +47,25 @@ function init() {
                 console.log("pause");
                 break;
         }
+    }
+
+    function createLevel(level:number) {
+        var gamefield;
+        var instructions;
+        if (1 == level) {
+            gamefield = new Field(3, 1);
+
+            var source = new Emitter(stage, 0, 0, Direction.East);
+            gamefield.field[0][0] = source;
+            gamefield.field[2][0] = new Detector(stage, 2, 0, Direction.East);
+            laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
+            label.text = "Press 'p' to start or pause the game.";
+        }
+
+        gamefield.render(stage);
+        label.y = gamefield.height * FIELD_SIZE + 10;
+        stage.addChild(label);
+
     }
 
 }
