@@ -136,6 +136,18 @@ function init() {
         label.y = gamefield.height * FIELD_SIZE + 10;
         stage.addChild(label);
 
+        stage.addEventListener("stagemousedown", handleClick);
+
+        function handleClick(event){
+            for(var i=0;i<gamefield.field.length;i++){
+                for(var j=0;j<gamefield.field[j].length;j++){
+                    if( gamefield.field[i][j] instanceof Mirror ){
+                        gamefield.field[i][j].rotate();
+                    }
+                }
+            }
+        }
+
     }
 
 }
