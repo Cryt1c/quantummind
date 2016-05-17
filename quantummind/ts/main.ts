@@ -184,30 +184,11 @@ function init() {
 
         function handleClick(event){
 
-            console.log('x',event.stageX);
-            console.log('y',event.stageY);
-
-            console.log( gamefield.getElement( event.stageX, event.stageY ) );
-
             var elem = gamefield.getElement( event.stageX, event.stageY );
 
             if( elem instanceof Mirror ){
                 elem.rotateMirror();
             }
-
-            /*
-            var counter = 0;
-            for(var i=0;i<gamefield.field.length;i++){
-                for(var j=0;j<gamefield.field[i].length;j++){
-                    if( gamefield.field[i][j] instanceof Mirror ){
-
-                        counter++;
-
-                        console.log('rotating' + counter + 'mirrors');
-                        gamefield.field[i][j].rotateMirror();
-                    }
-                }
-            }*/
         }
 
     }
