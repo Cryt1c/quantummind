@@ -184,10 +184,12 @@ function init() {
 
         function handleClick(event){
 
-            var elem = gamefield.getElement( event.stageX, event.stageY );
+            if(!createjs.Ticker.paused) {
+                var elem = gamefield.getElement(event.stageX, event.stageY);
 
-            if( elem instanceof Mirror ){
-                elem.rotateMirror();
+                if (elem instanceof Mirror) {
+                    elem.rotateMirror();
+                }
             }
         }
 
