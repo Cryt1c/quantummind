@@ -1,8 +1,5 @@
 import Stage = createjs.Stage;
 import Bitmap = createjs.Bitmap;
-/**
- * Created by Dominik on 10.05.2016.
- */
 
 abstract class GameElement {
     bitmap: Bitmap;
