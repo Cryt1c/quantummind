@@ -26,6 +26,7 @@ function init() {
         stage.addChild(label);
         stage.update();
         createLevel(currentLevel);
+        createjs.Ticker.paused = true;
         createjs.Ticker.addEventListener("tick", handleTick);
 
         function handleTick(event) {
@@ -63,9 +64,9 @@ function init() {
             gamefield = new Field(3, 1);
 
             var source = new Emitter(stage, 0, 0, Direction.East);
-            gamefield.field[0][0] = source;
+            gamefield.setSource(0, 0, source);
             gamefield.field[2][0] = new Detector(stage, 2, 0, Direction.East);
-            laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
+            laser = new Laser(gamefield);
             label.text = "Press 'p' to start or pause the game.";
         }
 
