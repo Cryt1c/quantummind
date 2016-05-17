@@ -139,7 +139,7 @@ function init() {
                 gamefield = new Field(5, 5);
                 var source = new Emitter(stage, 0, 2, Direction.East);
                 gamefield.setSource(source);
-                gamefield.add(new Mirror(stage, 3, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 2, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
                 gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
                 gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
                 gamefield.add(new Mirror(stage, 2, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
