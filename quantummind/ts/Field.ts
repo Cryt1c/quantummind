@@ -16,6 +16,10 @@ class Field {
         }
     }
 
+    add(elem:GameElement) {
+        this.field[elem.xPos][elem.yPos] = elem;
+    }
+
     render(stage:Stage) {
         for (var i = 0; i < this.width; i++) {
             for (var j = 0; j < this.height; j++) {
