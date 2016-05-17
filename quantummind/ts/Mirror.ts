@@ -1,7 +1,3 @@
-/**
- * Created by Dominik on 10.05.2016.
- */
-
 class Mirror extends GameElement {
     constructor(stage:createjs.Stage, xPos:number, yPos:number, orientation:number) {
         super(stage, xPos, yPos, 1, 1);

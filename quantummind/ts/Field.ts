@@ -1,6 +1,3 @@
-/**
- * Created by Dominik on 10.05.2016.
- */
 class Field {
     field:GameElement[][];
     private _source:Emitter;
@@ -17,6 +14,10 @@ class Field {
     }
 
     add(elem:GameElement) {
+        if (elem.xPos < 0 || elem.xPos >= this.width)
+            throw "x must be between 0 and " + this.width + ", but was " + elem.xPos;
+        if (elem.yPos < 0 || elem.yPos >= this.height)
+            throw "y must be between 0 and " + this.height + ", but was " + elem.yPos;
         this.field[elem.xPos][elem.yPos] = elem;
     }
 
@@ -39,8 +40,8 @@ class Field {
         return this._source;
     }
 
-    setSource(xPos:number, yPos:number, emitter:Emitter) {
-        this.field[xPos][yPos] = emitter;
+    setSource(emitter:Emitter) {
+        this.add(emitter);
         this._source = emitter;
     }
 }
