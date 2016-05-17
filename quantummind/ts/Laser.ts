@@ -4,6 +4,7 @@ import Point = createjs.Point;
 class Laser {
     public circle:Shape;
     private _won = false;
+    private _gameOver = false;
     public history:Point[];
     private xPos;
     private yPos;
@@ -59,6 +60,7 @@ class Laser {
             if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
                 // prevent laser from going off-grid
                 this.direction = null;
+                this._gameOver = true;
                 return;
             }
 
@@ -112,5 +114,9 @@ class Laser {
 
     get won():boolean {
         return this._won;
+    }
+
+    get gameOver():boolean {
+        return this._gameOver;
     }
 }
