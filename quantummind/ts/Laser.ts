@@ -6,11 +6,17 @@ class Laser {
     private _won = false;
     private _gameOver = false;
     public history:Point[];
+    private xPos;
+    private yPos;
+    private direction;
 
-    constructor(public xPos:number, public yPos:number, public direction:Direction, public gamefield:Field) {
+    constructor(public gamefield:Field) {
+        this.xPos = gamefield.source.xPos;
+        this.yPos = gamefield.source.yPos;
+        this.direction = gamefield.source.direction;
         this.circle = new createjs.Shape();
         this.circle.graphics.beginFill("red").drawCircle(0, 0, 50);
-        this.history = Array(new Point(xPos, yPos));
+        this.history = Array(new Point(this.xPos, this.yPos));
     }
 
     render(stage:Stage) {

@@ -4,12 +4,13 @@
 
 class Field {
     field:GameElement[][];
+    private _source:Emitter;
 
     constructor(public width:number, public height:number) {
         this.field = [];
-        for(var i: number = 0; i < this.width; i++) {
+        for (var i:number = 0; i < this.width; i++) {
             this.field[i] = [];
-            for(var j: number = 0; j< this.height; j++) {
+            for (var j:number = 0; j < this.height; j++) {
                 this.field[i][j] = null;
             }
         }
@@ -24,5 +25,14 @@ class Field {
                 }
             }
         }
+    }
+    
+    get source():Emitter {
+        return this._source;
+    }
+
+    setSource(xPos:number, yPos:number, emitter:Emitter) {
+        this.field[xPos][yPos] = emitter;
+        this._source = emitter;
     }
 }
