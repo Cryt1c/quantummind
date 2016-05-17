@@ -73,7 +73,7 @@ class Laser {
 
             if (currentField instanceof Mirror) {
                 //console.log("field alignment: " + currentField.orientation + " laserdirection: " + this.direction);
-                if (currentField.orientation == 1) {
+                if (currentField.orientation == MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.South;
                     }
@@ -87,7 +87,7 @@ class Laser {
                         this.direction = Direction.West;
                     }
                 }
-                else if (currentField.orientation == 0) {
+                else if (currentField.orientation == MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.North;
                     }
