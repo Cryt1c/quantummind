@@ -59,9 +59,12 @@ function init() {
                 if( laser.won ){
                     createLevel(++currentLevel);
                 }
-                stage.update();
-                createjs.Ticker.paused = !createjs.Ticker.paused;
-                console.log("pause");
+                setTimeout( function(){
+                    stage.update();
+                    createjs.Ticker.paused = !createjs.Ticker.paused;
+                    console.log("pause");
+                    //break;
+                }, 1000);
                 break;
             case 83:
                 stage.update();
@@ -180,17 +183,19 @@ function init() {
         label.y = gamefield.height * FIELD_SIZE + 10;
         stage.addChild(label);
 
-        stage.addEventListener("stagemousedown", handleClick);
+        stage.addEventListener("pressup", handleClick);
 
         function handleClick(event){
 
-            if(!createjs.Ticker.paused) {
+            console.log('click happened')
+
+            //if(!createjs.Ticker.paused) {
                 var elem = gamefield.getElement(event.stageX, event.stageY);
 
                 if (elem instanceof Mirror) {
                     elem.rotateMirror();
                 }
-            }
+            //}
         }
 
     }
