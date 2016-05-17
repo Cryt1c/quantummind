@@ -15,15 +15,15 @@ class Mirror extends GameElement {
         }
     }
 
-    rotate(){
+    rotateMirror(){
         var rotateArr = [ "mirror", "mirror2" ];
 
         if( this.orientation == 0 ) {
             this.orientation = 1;
-            super.rotate(1, rotateArr);
+            super.rotate(this.orientation, rotateArr);
         } else {
             this.orientation = 0;
-            super.rotate(0, rotateArr);
+            super.rotate(this.orientation, rotateArr);
         }
 
 

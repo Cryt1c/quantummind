@@ -55,12 +55,12 @@ class Laser {
 
         if(this.blink) return;
 
-        console.log(this.xPos + " " + this.yPos);
+        //console.log(this.xPos + " " + this.yPos);
         if (Math.abs(this.xPos % 1) < STEP_SIZE && Math.abs(this.yPos % 1) < STEP_SIZE) {
 
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);
-            console.log(x + " : " + y);
+            //console.log(x + " : " + y);
 
             if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
                 // prevent laser from going off-grid
@@ -72,7 +72,7 @@ class Laser {
             var currentField = this.gamefield.field[x][y];
 
             if (currentField instanceof Mirror) {
-                console.log("field alignment: " + currentField.orientation + " laserdirection: " + this.direction);
+                //console.log("field alignment: " + currentField.orientation + " laserdirection: " + this.direction);
                 if (currentField.orientation == 1) {
                     if (this.direction == Direction.West) {
                         this.direction = Direction.South;

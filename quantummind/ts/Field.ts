@@ -4,6 +4,7 @@
 class Field {
     field:GameElement[][];
     private _source:Emitter;
+    private _element:GameElement;
 
     constructor(public width:number, public height:number) {
         this.field = [];
@@ -17,6 +18,10 @@ class Field {
 
     add(elem:GameElement) {
         this.field[elem.xPos][elem.yPos] = elem;
+    }
+
+    getElement(x:number, y:number){
+        return this.field[Math.floor(x/FIELD_SIZE)][Math.floor(y/FIELD_SIZE)];
     }
 
     render(stage:Stage) {

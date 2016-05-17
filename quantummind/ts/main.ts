@@ -39,12 +39,11 @@ function init() {
                 laser.render(stage);
                 stage.update();
                 if (laser.won) {
-                    console.log("won");
+                    //console.log("won");
                     createjs.Ticker.paused = true;
-                    createLevel(++currentLevel);
                 }
                 else if (laser.gameOver) {
-                    console.log("gameover");
+                    //console.log("gameover");
                     createjs.Ticker.paused = true;
                     label.text = "Gameover! Press 'r' to restart the leve";
                     stage.update();
@@ -54,9 +53,12 @@ function init() {
     }
 
     function keyPressed(event) {
-        console.log(event.keyCode);
+        //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
+                if( laser.won ){
+                    createLevel(++currentLevel);
+                }
                 stage.update();
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
@@ -89,6 +91,7 @@ function init() {
         var gamefield;
         var instructions;
         stage.removeAllChildren();
+        stage.removeAllEventListeners();
         switch (level) {
             case 1:
                 gamefield = new Field(3, 1);
@@ -140,13 +143,31 @@ function init() {
         stage.addEventListener("stagemousedown", handleClick);
 
         function handleClick(event){
+
+            console.log('x',event.stageX);
+            console.log('y',event.stageY);
+
+            console.log( gamefield.getElement( event.stageX, event.stageY ) );
+
+            var elem = gamefield.getElement( event.stageX, event.stageY );
+
+            if( elem instanceof Mirror ){
+                elem.rotateMirror();
+            }
+
+            /*
+            var counter = 0;
             for(var i=0;i<gamefield.field.length;i++){
-                for(var j=0;j<gamefield.field[j].length;j++){
+                for(var j=0;j<gamefield.field[i].length;j++){
                     if( gamefield.field[i][j] instanceof Mirror ){
-                        gamefield.field[i][j].rotate();
+
+                        counter++;
+
+                        console.log('rotating' + counter + 'mirrors');
+                        gamefield.field[i][j].rotateMirror();
                     }
                 }
-            }
+            }*/
         }
 
     }
