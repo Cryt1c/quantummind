@@ -21,6 +21,7 @@ function init() {
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
     createjs.Ticker.addEventListener("tick", handleTick);
+    stage.on('stagemousedown', handleClick);
 
     function handleTick(event) {
         if (!createjs.Ticker.paused) {
@@ -33,6 +34,12 @@ function init() {
             }
         }
     }
+
+    function handleClick(event) {
+       console.log('clicked currentTarget',event.currentTarget);
+       console.log('clicked target',event.target);
+    }
+
 
     function keyPressed(event) {
         console.log(event.keyCode);
