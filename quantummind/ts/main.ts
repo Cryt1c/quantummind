@@ -61,8 +61,8 @@ function init() {
                 }
                 setTimeout( function(){
                     stage.update();
-                    createjs.Ticker.paused = !createjs.Ticker.paused;
                     console.log("pause");
+                    createjs.Ticker.paused = !createjs.Ticker.paused;
                     //break;
                 }, 1000);
                 break;
@@ -200,13 +200,13 @@ function init() {
 
             console.log('click happened')
 
-            //if(!createjs.Ticker.paused) {
+            if(!createjs.Ticker.paused) {
                 var elem = gamefield.getElement(event.stageX, event.stageY);
 
                 if (elem instanceof Mirror) {
                     elem.rotateMirror();
                 }
-            //}
+            }
         }
 
     }
