@@ -102,7 +102,7 @@ function init() {
                 gamefield = new Field(3, 3);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(0, 0, source);
-                gamefield.add(new Mirror(stage, 0, 2, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT));
+                gamefield.add(new Mirror(stage, 0, 2, 0));
                 gamefield.add(new Detector(stage, 2, 2, Direction.East));
                 laser = new Laser(gamefield);
                 label.text = "Mirrors reflect the laser particles.";
@@ -112,7 +112,7 @@ function init() {
                 gamefield = new Field(3, 3);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(0, 0, source);
-                gamefield.add(new Mirror(stage, 0, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 0, 2, 1));
                 gamefield.add(new Detector(stage, 2, 2, Direction.East));
                 laser = new Laser(gamefield);
                 label.text = "Click on the mirror to rotate it.";
@@ -122,9 +122,9 @@ function init() {
                 gamefield = new Field(4, 6);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(0, 0, source);
-                gamefield.add(new Mirror(stage, 3, 3, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT));
-                gamefield.add(new Mirror(stage, 3, 2, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT));
-                gamefield.add(new Mirror(stage, 1, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT));
+                gamefield.add(new Mirror(stage, 3, 3, 1));
+                gamefield.add(new Mirror(stage, 3, 2, 0));
+                gamefield.add(new Mirror(stage, 1, 2, 1));
                 gamefield.add(new Detector(stage, 1, 5, Direction.East));
                 laser = new Laser(gamefield);
                 label.text = "Click on the mirror to rotate it.";
