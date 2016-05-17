@@ -31,8 +31,9 @@ class Field {
         return this._source;
     }
 
-    setSource(xPos:number, yPos:number, emitter:Emitter) {
-        this.field[xPos][yPos] = emitter;
+    setSource(emitter:Emitter) {
+        
+        this.field[emitter.xPos][emitter.yPos] = emitter;
         this._source = emitter;
     }
 }
