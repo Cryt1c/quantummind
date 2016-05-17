@@ -114,7 +114,7 @@ function init() {
                 gamefield = new Field(3, 3);
                 var source = new Emitter(stage, 0, 0, Direction.East);
                 gamefield.setSource(0, 0, source);
-                gamefield.add(new Mirror(stage, 0, 2, 1));
+                gamefield.add(new Mirror(stage, 2, 0, 1));
                 gamefield.add(new Detector(stage, 2, 2));
                 laser = new Laser(gamefield);
                 label.text = "Click on the mirror to rotate it.";
