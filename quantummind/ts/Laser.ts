@@ -55,7 +55,8 @@ class Laser {
 
         if(this.blink) return;
 
-        if (this.xPos % 1 <= STEP_SIZE && this.yPos % 1 <= STEP_SIZE) {
+        console.log(this.xPos + " " + this.yPos);
+        if (this.xPos % 1 < STEP_SIZE && this.yPos % 1 < STEP_SIZE) {
 
             var x = Math.round(this.xPos);
             var y = Math.round(this.yPos);
@@ -103,10 +104,8 @@ class Laser {
             }
 
             else if (currentField instanceof Detector) {
-                if (currentField.direction == this.direction) {
-                    this._won = true;
-                    this.direction = null;
-                }
+                this._won = true;
+                this.direction = null;
             }
 
             else if (currentField instanceof Block) {
