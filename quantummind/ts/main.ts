@@ -55,7 +55,7 @@ function init() {
     function keyPressed(event) {
         //console.log(event.keyCode);
         switch (event.keyCode) {
-            case 80:
+            case 80: // 'p'
                 if( laser.won ){
                     createLevel(++currentLevel);
                 }
@@ -63,18 +63,18 @@ function init() {
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
                 break;
-            case 83:
+            case 83: // 's'
                 stage.update();
                 console.log("start");
                 break;
-            case 82:
+            case 82: // 'r'
                 stage.removeAllChildren();
                 laser.blink = false;
                 createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
                 break;
-            case 32:
+            case 32: // space
                 laser.blink = !laser.blink;
                 if(laser.blink) {
                     stage.addChild(blinkShape);
@@ -163,6 +163,17 @@ function init() {
                 gamefield.add(new Detector(stage, 8, 4));
                 laser = new Laser(gamefield);
                 label.text = "Blocks hinder the path of the laser. Try to go around blocks.";
+                break;
+
+            case 7:
+                gamefield = new Field(5, 3);
+                var source = new Emitter(stage, 0, 1, Direction.East);
+                gamefield.setSource(source);
+                gamefield.add(new Block(stage, 2, 1));
+                gamefield.add(new Detector(stage, 4, 1));
+                laser = new Laser(gamefield);
+                label.text = "Tunnel effect! You can pass trough blocks by switching to wave mode (press 'space'). " +
+                    "But remember to switch back again! Otherwise the laser will also pass through the detector and mirrors.";
                 break;
         }
 
