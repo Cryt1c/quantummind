@@ -3,17 +3,15 @@
  */
 
 class Mirror extends GameElement {
-    constructor(xPos:number, yPos:number, orientation:number) {
-        super(xPos, yPos, 1, 1);
+    constructor(stage:createjs.Stage, xPos:number, yPos:number, orientation:number) {
+        super(stage,xPos, yPos, 1, 1);
 
         this.orientation = orientation;
 
         if (this.orientation === 0) {
-            super.initBitmap("mirror.png");
+            super.initBitmap("mirror");
         } else {
-            super.initBitmap("mirror2.png");
+            super.initBitmap("mirror2");
         }
         
     }
-
-}
