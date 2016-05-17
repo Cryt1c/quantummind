@@ -6,7 +6,7 @@ import Bitmap = createjs.Bitmap;
 
 abstract class GameElement {
     bitmap: Bitmap;
-    orientation: number;
+    orientation: number = 0;
 
     constructor(public xPos:number, public yPos:number, public width:number, public height:number) {
     };
@@ -20,12 +20,15 @@ abstract class GameElement {
         // console.log("after: " + this.bitmap.scaleX + " " + img.width);
     }
 
-    //@param:
     rotate( orientation:number, bitmaps: string[] ) {
 
-        
+        this.bitmap = new createjs.Bitmap("assets/" + bitmaps[orientation]);
+        this.orientation = orientation;
 
-        this.bitmap =
+        var img = this.bitmap.image;
+        this.bitmap.scaleX = FIELD_SIZE / img.width;
+        this.bitmap.scaleY = FIELD_SIZE / img.height;
+        
     }
 
     render(stage:Stage) {

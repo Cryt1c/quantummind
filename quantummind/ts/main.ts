@@ -15,9 +15,9 @@ function init() {
 
     var source = new Emitter(0, 2, Direction.East);
     gamefield.field[0][2] = source;
-    gamefield.field[2][2] = new Mirror(2, 2, Alignment.BOTTOM_LEFT_TO_TOP_RIGHT);
+    gamefield.field[2][2] = new Mirror(2, 2, 1);
     gamefield.field[2][0] = new Detector(2, 0, Direction.North);
-    gamefield.field[2][1] = new Mirror(2, 1, Alignment.TOP_LEFT_TO_BOTTOM_RIGHT);
+    gamefield.field[2][1] = new Mirror(2, 1, 0);
     var laser = new Laser(source.xPos, source.yPos, source.direction, gamefield);
     gamefield.render(stage);
     createjs.Ticker.addEventListener("tick", handleTick);
@@ -36,8 +36,23 @@ function init() {
     }
 
     function handleClick(event) {
-       console.log('clicked currentTarget',event.currentTarget);
-       console.log('clicked target',event.target);
+
+        
+
+        for( var i=0;i<gamefield.field.length;i++ ){
+            for( var j=0;j<gamefield.field[i].length;j++ ){
+                if(gamefield.field[i][j] instanceof Mirror){
+
+                    var rotateArr = [ "mirror.png", "mirror2.png" ];
+
+                    gamefield.field[i][j].rotate( 1, rotateArr );
+
+                    gamefield.render(stage);
+                    stage.update();
+                }
+            }
+        }
+
     }
 
 
