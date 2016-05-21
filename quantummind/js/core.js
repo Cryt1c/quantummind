@@ -13,14 +13,17 @@ var QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
 var label;
+var pauseLabel;
 var currentLevel = 1;
 var gamefield;
 function init() {
     document.onkeydown = keyPressed;
     stage = new createjs.Stage("demoCanvas");
+    stage.y = 50;
     label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
+    pauseLabel = new createjs.Text("The game is paused! Press 'p' to continue!", "20px Arial", "#ff0000");
+    pauseLabel.y = -50;
     var blinkShape = new createjs.Shape();
-    blinkShape.graphics.beginFill("black").drawRect(0, 0, 500, 500);
     QUEUE.loadFile({ id: "detector", src: "./assets/detector.png" });
     QUEUE.loadFile({ id: "mirror", src: "./assets/mirror.png" });
     QUEUE.loadFile({ id: "mirror2", src: "./assets/mirror2.png" });
@@ -67,8 +70,13 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
+                stage.removeChild(pauseLabel);
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
+                if (createjs.Ticker.paused) {
+                    stage.addChild(pauseLabel);
+                }
+                stage.update();
                 break;
             case 83:
                 stage.update();
@@ -82,14 +90,20 @@ function init() {
                 console.log("reset");
                 break;
             case 32:
-                laser.blink = !laser.blink;
-                if (laser.blink) {
-                    stage.addChild(blinkShape);
+                if (!createjs.Ticker.paused) {
+                    laser.blink = !laser.blink;
+                    console.log(gamefield.lengthX() * FIELD_SIZE);
+                    console.log(gamefield.lengthY() * FIELD_SIZE);
+                    blinkShape.graphics.clear();
+                    blinkShape.graphics.beginFill("black").drawRect(0, 0, gamefield.lengthX() * FIELD_SIZE, gamefield.lengthY() * FIELD_SIZE);
+                    if (laser.blink) {
+                        stage.addChild(blinkShape);
+                    }
+                    else {
+                        stage.removeChild(blinkShape);
+                    }
+                    stage.update();
                 }
-                else {
-                    stage.removeChild(blinkShape);
-                }
-                stage.update();
                 break;
         }
     }
@@ -314,6 +328,12 @@ var Field = (function () {
     Field.prototype.getElement = function (x, y) {
         return this.field[Math.floor(x / FIELD_SIZE)][Math.floor(y / FIELD_SIZE)];
     };
+    Field.prototype.lengthX = function () {
+        return this.field.length;
+    };
+    Field.prototype.lengthY = function () {
+        return this.field[0].length;
+    };
     Field.prototype.render = function (stage) {
         for (var i = 0; i < this.width; i++) {
             for (var j = 0; j < this.height; j++) {
@@ -386,7 +406,7 @@ var Laser = (function () {
         this.history.push(new Point(this.xPos, this.yPos));
         if (this.blink)
             return;
-        console.log(this.xPos + " " + this.yPos);
+        //console.log(this.xPos + " " + this.yPos);
         if (Math.abs(this.xPos % 100) < STEP_SIZE && Math.abs(this.yPos % 100) < STEP_SIZE) {
             var x = Math.round(this.xPos / 100);
             var y = Math.round(this.yPos / 100);

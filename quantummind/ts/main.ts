@@ -11,15 +11,18 @@ const QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
 var label;
+var pauseLabel;
 var currentLevel = 1;
 var gamefield;
 
 function init() {
     document.onkeydown = keyPressed;
     stage = new createjs.Stage("demoCanvas");
+    stage.y = 50;
     label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
+    pauseLabel = new createjs.Text("The game is paused! Press 'p' to continue!", "20px Arial", "#ff0000");
+    pauseLabel.y = -50;
     var blinkShape = new createjs.Shape();
-    blinkShape.graphics.beginFill("black").drawRect(0, 0, 500, 500);
 
     QUEUE.loadFile({id: "detector", src: "./assets/detector.png"});
     QUEUE.loadFile({id: "mirror", src: "./assets/mirror.png"});
@@ -76,8 +79,13 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80: // 'p'
+                stage.removeChild(pauseLabel);
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
+                if( createjs.Ticker.paused ){
+                    stage.addChild(pauseLabel);
+                }
+                stage.update();
                 break;
             case 83: // 's'
                 stage.update();
@@ -91,14 +99,21 @@ function init() {
                 console.log("reset");
                 break;
             case 32: // space
-                laser.blink = !laser.blink;
-                if (laser.blink) {
-                    stage.addChild(blinkShape);
+                if( !createjs.Ticker.paused ) {
+                    laser.blink = !laser.blink;
+                    console.log(gamefield.lengthX() * FIELD_SIZE);
+                    console.log(gamefield.lengthY() * FIELD_SIZE);
+                    blinkShape.graphics.clear();
+                    blinkShape.graphics.beginFill("black").drawRect(0, 0, gamefield.lengthX() * FIELD_SIZE, gamefield.lengthY() * FIELD_SIZE);
+
+                    if (laser.blink) {
+                        stage.addChild(blinkShape);
+                    }
+                    else {
+                        stage.removeChild(blinkShape);
+                    }
+                    stage.update();
                 }
-                else {
-                    stage.removeChild(blinkShape);
-                }
-                stage.update();
                 break;
         }
     }

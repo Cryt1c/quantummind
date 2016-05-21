@@ -25,6 +25,14 @@ class Field {
         return this.field[Math.floor(x/FIELD_SIZE)][Math.floor(y/FIELD_SIZE)];
     }
 
+    lengthX(){
+        return this.field.length;
+    }
+
+    lengthY(){
+        return this.field[0].length;
+    }
+
     render(stage:Stage) {
         for (var i = 0; i < this.width; i++) {
             for (var j = 0; j < this.height; j++) {
