@@ -95,7 +95,6 @@ function init() {
     }
 }
 function createLevel(level) {
-    var instructions;
     stage.removeAllChildren();
     switch (level) {
         case 1:
@@ -104,15 +103,14 @@ function createLevel(level) {
             gamefield.setSource(source);
             gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
-            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
-                "\nPress 'p' to start the game.";
+            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right).";
             break;
         case 2:
-            gamefield = new Field(3, 3);
+            gamefield = new Field(9, 3);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Detector(stage, 2, 2));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
             label.text = "A mirror (the blue bar on the top right) reflects the laser.";
             break;
@@ -123,7 +121,7 @@ function createLevel(level) {
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "Click on mirrors to rotate them.";
+            label.text = "Click on mirrors to rotate them. Mirrors cannot be rotated when the game is paused.";
             break;
         case 4:
             gamefield = new Field(4, 6);
@@ -175,6 +173,7 @@ function createLevel(level) {
                 "But remember to switch back again! Otherwise the laser will also pass through the detector and mirrors.";
             break;
     }
+    label.text += "\nPress 'p' to start or pause the game.";
     gamefield.render(stage);
     var border = new createjs.Shape();
     border.graphics.beginStroke("black");

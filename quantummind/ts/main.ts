@@ -35,11 +35,11 @@ function init() {
 
         stage.addEventListener("pressup", handleClick);
 
-        function handleClick(event){
+        function handleClick(event) {
 
             console.log('click happened')
 
-            if(!createjs.Ticker.paused) {
+            if (!createjs.Ticker.paused) {
                 var elem = gamefield.getElement(event.stageX, event.stageY);
 
                 if (elem instanceof Mirror) {
@@ -47,6 +47,7 @@ function init() {
                 }
             }
         }
+
         createLevel(currentLevel);
         createjs.Ticker.paused = true;
         createjs.Ticker.addEventListener("tick", handleTick);
@@ -91,7 +92,7 @@ function init() {
                 break;
             case 32: // space
                 laser.blink = !laser.blink;
-                if(laser.blink) {
+                if (laser.blink) {
                     stage.addChild(blinkShape);
                 }
                 else {
@@ -105,7 +106,6 @@ function init() {
 }
 
 function createLevel(level:number) {
-    var instructions;
     stage.removeAllChildren();
     switch (level) {
         case 1:
@@ -114,16 +114,15 @@ function createLevel(level:number) {
             gamefield.setSource(source);
             gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
-            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
-                "\nPress 'p' to start the game.";
+            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right).";
             break;
 
         case 2:
-            gamefield = new Field(3, 3);
+            gamefield = new Field(9, 3);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Detector(stage, 2, 2));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
             label.text = "A mirror (the blue bar on the top right) reflects the laser.";
             break;
@@ -135,7 +134,7 @@ function createLevel(level:number) {
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "Click on mirrors to rotate them.";
+            label.text = "Click on mirrors to rotate them. Mirrors cannot be rotated when the game is paused.";
             break;
 
         case 4:
@@ -192,6 +191,8 @@ function createLevel(level:number) {
             break;
     }
 
+    label.text += "\nPress 'p' to start or pause the game."
+
     gamefield.render(stage);
 
     var border = new createjs.Shape();
@@ -199,7 +200,7 @@ function createLevel(level:number) {
     border.graphics.setStrokeStyle(2);
     border.snapToPixel = true;
     var xLength = gamefield.field.length * FIELD_SIZE;
-    var yLength= gamefield.field[0].length * FIELD_SIZE;
+    var yLength = gamefield.field[0].length * FIELD_SIZE;
     border.graphics.drawRect(0, 0, xLength, yLength);
     stage.addChild(border);
 
