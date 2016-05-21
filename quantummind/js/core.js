@@ -348,7 +348,6 @@ var Laser = (function () {
         this.yPos = gamefield.source.yPos;
         this.direction = gamefield.source.direction;
         this.circle = new createjs.Shape();
-        this.circle.graphics.beginFill("red").drawCircle(0, 0, 50);
         this.history = Array(new Point(this.xPos, this.yPos));
         this.blink = false;
     }
@@ -356,14 +355,15 @@ var Laser = (function () {
         if (this.blink)
             return;
         var r = FIELD_SIZE / 2;
-        var circle = new createjs.Shape();
-        var point;
-        for (var _i = 0, _a = this.history; _i < _a.length; _i++) {
-            point = _a[_i];
-            // TODO do not draw whole history
-            circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
-            stage.addChild(circle);
-        }
+        this.circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r / 4);
+        stage.addChild(this.circle);
+        // var circle = new createjs.Shape();
+        // var point;
+        // for (point of this.history) {
+        // 
+        //     circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
+        //     stage.addChild(circle);
+        // }
     };
     Laser.prototype.move = function () {
         switch (this.direction) {
