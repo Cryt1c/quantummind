@@ -27,6 +27,7 @@ class Laser {
         var circle = new createjs.Shape();
         var point;
         for (point of this.history) {
+            // TODO do not draw whole history
             circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
             stage.addChild(circle);
         }

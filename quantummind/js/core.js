@@ -103,7 +103,8 @@ function createLevel(level) {
             gamefield.setSource(source);
             gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
-            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right).";
+            label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
+                " You cannot direct the laser itself but you can manipulate other objects to redirect lasers.";
             break;
         case 2:
             gamefield = new Field(9, 3);
@@ -112,7 +113,7 @@ function createLevel(level) {
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "A mirror (the blue bar on the top right) reflects the laser.";
+            label.text = "Mirrors (the blue bar on the top right) reflect the laser.";
             break;
         case 3:
             gamefield = new Field(9, 3);
@@ -121,30 +122,30 @@ function createLevel(level) {
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "Click on mirrors to rotate them. Mirrors cannot be rotated when the game is paused.";
+            label.text = "Click on mirrors to rotate them. Mirrors cannot be rotated while the game is paused.";
             break;
         case 4:
-            gamefield = new Field(4, 6);
+            gamefield = new Field(9, 6);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 3, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage, 1, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Mirror(stage, 3, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Detector(stage, 1, 5));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage, 2, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 8, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Detector(stage, 2, 5));
             laser = new Laser(gamefield);
-            label.text = "Click on mirrors to rotate them.";
+            label.text = "Click on mirrors to rotate them. Mirrors cannot be rotated while the game is paused.";
             break;
         case 5:
-            gamefield = new Field(5, 5);
-            var source = new Emitter(stage, 0, 2, Direction.East);
+            gamefield = new Field(9, 9);
+            var source = new Emitter(stage, 0, 4, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 2, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Mirror(stage, 2, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Block(stage, 3, 0));
-            gamefield.add(new Detector(stage, 4, 3));
+            gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 4, 8, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 8, 8, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Block(stage, 6, 0));
+            gamefield.add(new Detector(stage, 8, 4));
             laser = new Laser(gamefield);
             label.text = "Blocks hinder the path of the laser. Try to go around blocks.";
             break;
@@ -163,14 +164,14 @@ function createLevel(level) {
             label.text = "Blocks hinder the path of the laser. Try to go around blocks.";
             break;
         case 7:
-            gamefield = new Field(5, 3);
+            gamefield = new Field(9, 3);
             var source = new Emitter(stage, 0, 1, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Block(stage, 2, 1));
-            gamefield.add(new Detector(stage, 4, 1));
+            gamefield.add(new Block(stage, 4, 1));
+            gamefield.add(new Detector(stage, 8, 1));
             laser = new Laser(gamefield);
             label.text = "Tunnel effect! You can pass trough blocks by switching to wave mode (press 'space'). " +
-                "But remember to switch back again! Otherwise the laser will also pass through the detector and mirrors.";
+                "But remember to switch back again! Otherwise the laser will also pass through the mirrors and the detector.";
             break;
     }
     label.text += "\nPress 'p' to start or pause the game.";
@@ -359,6 +360,7 @@ var Laser = (function () {
         var point;
         for (var _i = 0, _a = this.history; _i < _a.length; _i++) {
             point = _a[_i];
+            // TODO do not draw whole history
             circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
             stage.addChild(circle);
         }
