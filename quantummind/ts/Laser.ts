@@ -109,8 +109,8 @@ class Laser {
             }
 
             else if (currentField instanceof Block) {
-                    this.direction = null;
-                    this._gameOver = true;
+                this.direction = null;
+                this._gameOver = true;
             }
         }
     }
