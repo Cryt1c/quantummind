@@ -12,8 +12,8 @@ class Laser {
     private _blink;
 
     constructor(public gamefield:Field) {
-        this.xPos = gamefield.source.xPos;
-        this.yPos = gamefield.source.yPos;
+        this.xPos = gamefield.source.xPos * 100;
+        this.yPos = gamefield.source.yPos * 100;
         this.direction = gamefield.source.direction;
         this.circle = new createjs.Shape();
         this.history = Array(new Point(this.xPos, this.yPos));
@@ -23,12 +23,12 @@ class Laser {
     render(stage:Stage) {
         if(this.blink) return;
         var r = FIELD_SIZE / 2;
-        this.circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r / 4);
+        this.circle.graphics.beginFill("red").drawCircle(this.xPos/100 * FIELD_SIZE + r, this.yPos/100 * FIELD_SIZE + r, r / 4);
         stage.addChild(this.circle);
         // var circle = new createjs.Shape();
         // var point;
         // for (point of this.history) {
-        // 
+        //
         //     circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
         //     stage.addChild(circle);
         // }
@@ -57,11 +57,11 @@ class Laser {
 
         if(this.blink) return;
 
-        //console.log(this.xPos + " " + this.yPos);
-        if (Math.abs(this.xPos % 1) < STEP_SIZE && Math.abs(this.yPos % 1) < STEP_SIZE) {
+        console.log(this.xPos + " " + this.yPos);
+        if (Math.abs(this.xPos % 100) < STEP_SIZE && Math.abs(this.yPos % 100) < STEP_SIZE) {
 
-            var x = Math.round(this.xPos);
-            var y = Math.round(this.yPos);
+            var x = Math.round(this.xPos/100);
+            var y = Math.round(this.yPos/100);
             //console.log(x + " : " + y);
 
             if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {

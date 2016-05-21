@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../definitelyTyped/preloadjs.d.ts" />
 var Ticker = createjs.Ticker;
 var FIELD_SIZE = 50;
-var STEP_SIZE = 0.1;
+var STEP_SIZE = 10;
 var QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
@@ -75,8 +75,8 @@ function init() {
                 console.log("start");
                 break;
             case 82:
-                stage.removeAllChildren();
                 laser.blink = false;
+                createjs.Ticker.paused = true;
                 createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
@@ -139,7 +139,8 @@ function createLevel(level) {
             gamefield = new Field(9, 9);
             var source = new Emitter(stage, 0, 4, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            // TODO gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 4, 8, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
@@ -344,8 +345,8 @@ var Laser = (function () {
         this.gamefield = gamefield;
         this._won = false;
         this._gameOver = false;
-        this.xPos = gamefield.source.xPos;
-        this.yPos = gamefield.source.yPos;
+        this.xPos = gamefield.source.xPos * 100;
+        this.yPos = gamefield.source.yPos * 100;
         this.direction = gamefield.source.direction;
         this.circle = new createjs.Shape();
         this.history = Array(new Point(this.xPos, this.yPos));
@@ -355,12 +356,12 @@ var Laser = (function () {
         if (this.blink)
             return;
         var r = FIELD_SIZE / 2;
-        this.circle.graphics.beginFill("red").drawCircle(this.xPos * FIELD_SIZE + r, this.yPos * FIELD_SIZE + r, r / 4);
+        this.circle.graphics.beginFill("red").drawCircle(this.xPos / 100 * FIELD_SIZE + r, this.yPos / 100 * FIELD_SIZE + r, r / 4);
         stage.addChild(this.circle);
         // var circle = new createjs.Shape();
         // var point;
         // for (point of this.history) {
-        // 
+        //
         //     circle.graphics.beginFill("red").drawCircle(point.x * FIELD_SIZE + r, point.y * FIELD_SIZE + r, r / 4);
         //     stage.addChild(circle);
         // }
@@ -386,10 +387,10 @@ var Laser = (function () {
         this.history.push(new Point(this.xPos, this.yPos));
         if (this.blink)
             return;
-        //console.log(this.xPos + " " + this.yPos);
-        if (Math.abs(this.xPos % 1) < STEP_SIZE && Math.abs(this.yPos % 1) < STEP_SIZE) {
-            var x = Math.round(this.xPos);
-            var y = Math.round(this.yPos);
+        console.log(this.xPos + " " + this.yPos);
+        if (Math.abs(this.xPos % 100) < STEP_SIZE && Math.abs(this.yPos % 100) < STEP_SIZE) {
+            var x = Math.round(this.xPos / 100);
+            var y = Math.round(this.yPos / 100);
             //console.log(x + " : " + y);
             if (x < 0 || y < 0 || x >= this.gamefield.width || y >= this.gamefield.height) {
                 // prevent laser from going off-grid

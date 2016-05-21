@@ -5,7 +5,7 @@
 import Ticker = createjs.Ticker;
 
 const FIELD_SIZE = 50;
-const STEP_SIZE = 0.1;
+const STEP_SIZE = 10;
 const QUEUE = new createjs.LoadQueue(false);
 
 var stage;
@@ -84,8 +84,8 @@ function init() {
                 console.log("start");
                 break;
             case 82: // 'r'
-                stage.removeAllChildren();
                 laser.blink = false;
+                createjs.Ticker.paused = true;
                 createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
@@ -154,7 +154,8 @@ function createLevel(level:number) {
             gamefield = new Field(9, 9);
             var source = new Emitter(stage, 0, 4, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            // TODO gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 4, 8, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
