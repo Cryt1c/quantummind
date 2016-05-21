@@ -59,6 +59,7 @@ function init() {
                 if (laser.won) {
                     //console.log("won");
                     createjs.Ticker.paused = true;
+                    continueToNextLevel();
                 }
                 else if (laser.gameOver) {
                     //console.log("gameover");
@@ -207,8 +208,7 @@ function createLevel(level:number) {
     stage.update();
 }
 
-function continueToNextLevel(){
-    createjs.Ticker.paused = true;
+function continueToNextLevel() {
     createLevel(++currentLevel);
     stage.update();
 }

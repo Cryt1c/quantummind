@@ -52,6 +52,7 @@ function init() {
                 if (laser.won) {
                     //console.log("won");
                     createjs.Ticker.paused = true;
+                    continueToNextLevel();
                 }
                 else if (laser.gameOver) {
                     //console.log("gameover");
@@ -188,7 +189,6 @@ function createLevel(level) {
     stage.update();
 }
 function continueToNextLevel() {
-    createjs.Ticker.paused = true;
     createLevel(++currentLevel);
     stage.update();
 }
@@ -431,7 +431,6 @@ var Laser = (function () {
             else if (currentField instanceof Detector) {
                 this._won = true;
                 this.direction = null;
-                continueToNextLevel();
             }
             else if (currentField instanceof Block) {
                 this.direction = null;

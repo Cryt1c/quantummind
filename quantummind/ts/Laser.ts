@@ -106,7 +106,6 @@ class Laser {
             else if (currentField instanceof Detector) {
                 this._won = true;
                 this.direction = null;
-                continueToNextLevel();
             }
 
             else if (currentField instanceof Block) {
