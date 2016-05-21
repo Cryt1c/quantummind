@@ -12,7 +12,7 @@ var stage;
 var laser;
 var label;
 var currentLevel = 1;
-
+var gamefield;
 
 function init() {
     document.onkeydown = keyPressed;
@@ -32,6 +32,21 @@ function init() {
         label.lineWidth = 500;
         stage.addChild(label);
         stage.update();
+
+        stage.addEventListener("pressup", handleClick);
+
+        function handleClick(event){
+
+            console.log('click happened')
+
+            if(!createjs.Ticker.paused) {
+                var elem = gamefield.getElement(event.stageX, event.stageY);
+
+                if (elem instanceof Mirror) {
+                    elem.rotateMirror();
+                }
+            }
+        }
         createLevel(currentLevel);
         createjs.Ticker.paused = true;
         createjs.Ticker.addEventListener("tick", handleTick);
@@ -59,15 +74,8 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80: // 'p'
-                if( laser.won ){
-                    createLevel(++currentLevel);
-                }
-                setTimeout( function(){
-                    stage.update();
-                    console.log("pause");
-                    createjs.Ticker.paused = !createjs.Ticker.paused;
-                    //break;
-                }, 1000);
+                createjs.Ticker.paused = !createjs.Ticker.paused;
+                console.log("pause");
                 break;
             case 83: // 's'
                 stage.update();
@@ -96,16 +104,14 @@ function init() {
 }
 
 function createLevel(level:number) {
-    var gamefield;
     var instructions;
     stage.removeAllChildren();
-    stage.removeAllEventListeners();
     switch (level) {
         case 1:
-            gamefield = new Field(3, 1);
+            gamefield = new Field(6, 1);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Detector(stage, 2, 0));
+            gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
             label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
                 "\nPress 'p' to start the game.";
@@ -122,13 +128,13 @@ function createLevel(level:number) {
             break;
 
         case 3:
-            gamefield = new Field(3, 3);
+            gamefield = new Field(9, 3);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Detector(stage, 2, 2));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "Click on the mirror to rotate it.";
+            label.text = "Click on mirrors to rotate them.";
             break;
 
         case 4:
@@ -140,7 +146,7 @@ function createLevel(level:number) {
             gamefield.add(new Mirror(stage, 3, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 1, 5));
             laser = new Laser(gamefield);
-            label.text = "Click on the mirror to rotate it.";
+            label.text = "Click on mirrors to rotate them.";
             break;
 
         case 5:
@@ -199,21 +205,10 @@ function createLevel(level:number) {
     label.y = gamefield.height * FIELD_SIZE + 10;
     stage.addChild(label);
     stage.update();
-
-    stage.addEventListener("pressup", handleClick);
-
-    function handleClick(event){
-
-        console.log('click happened')
-
-        if(!createjs.Ticker.paused) {
-            var elem = gamefield.getElement(event.stageX, event.stageY);
-
-            if (elem instanceof Mirror) {
-                elem.rotateMirror();
-            }
-        }
-    }
-
 }
 
+function continueToNextLevel(){
+    createjs.Ticker.paused = true;
+    createLevel(++currentLevel);
+    stage.update();
+}

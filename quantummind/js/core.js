@@ -14,6 +14,7 @@ var stage;
 var laser;
 var label;
 var currentLevel = 1;
+var gamefield;
 function init() {
     document.onkeydown = keyPressed;
     stage = new createjs.Stage("demoCanvas");
@@ -30,6 +31,16 @@ function init() {
         label.lineWidth = 500;
         stage.addChild(label);
         stage.update();
+        stage.addEventListener("pressup", handleClick);
+        function handleClick(event) {
+            console.log('click happened');
+            if (!createjs.Ticker.paused) {
+                var elem = gamefield.getElement(event.stageX, event.stageY);
+                if (elem instanceof Mirror) {
+                    elem.rotateMirror();
+                }
+            }
+        }
         createLevel(currentLevel);
         createjs.Ticker.paused = true;
         createjs.Ticker.addEventListener("tick", handleTick);
@@ -55,15 +66,8 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
-                if (laser.won) {
-                    createLevel(++currentLevel);
-                }
-                setTimeout(function () {
-                    stage.update();
-                    console.log("pause");
-                    createjs.Ticker.paused = !createjs.Ticker.paused;
-                    //break;
-                }, 1000);
+                createjs.Ticker.paused = !createjs.Ticker.paused;
+                console.log("pause");
                 break;
             case 83:
                 stage.update();
@@ -90,16 +94,14 @@ function init() {
     }
 }
 function createLevel(level) {
-    var gamefield;
     var instructions;
     stage.removeAllChildren();
-    stage.removeAllEventListeners();
     switch (level) {
         case 1:
-            gamefield = new Field(3, 1);
+            gamefield = new Field(6, 1);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Detector(stage, 2, 0));
+            gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
             label.text = "In this game you have to direct a laser from the emitter (on the left) to the detector (on the right)." +
                 "\nPress 'p' to start the game.";
@@ -114,13 +116,13 @@ function createLevel(level) {
             label.text = "A mirror (the blue bar on the top right) reflects the laser.";
             break;
         case 3:
-            gamefield = new Field(3, 3);
+            gamefield = new Field(9, 3);
             var source = new Emitter(stage, 0, 0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Detector(stage, 2, 2));
+            gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Detector(stage, 8, 2));
             laser = new Laser(gamefield);
-            label.text = "Click on the mirror to rotate it.";
+            label.text = "Click on mirrors to rotate them.";
             break;
         case 4:
             gamefield = new Field(4, 6);
@@ -131,7 +133,7 @@ function createLevel(level) {
             gamefield.add(new Mirror(stage, 3, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 1, 5));
             laser = new Laser(gamefield);
-            label.text = "Click on the mirror to rotate it.";
+            label.text = "Click on mirrors to rotate them.";
             break;
         case 5:
             gamefield = new Field(5, 5);
@@ -184,16 +186,11 @@ function createLevel(level) {
     label.y = gamefield.height * FIELD_SIZE + 10;
     stage.addChild(label);
     stage.update();
-    stage.addEventListener("pressup", handleClick);
-    function handleClick(event) {
-        console.log('click happened');
-        if (!createjs.Ticker.paused) {
-            var elem = gamefield.getElement(event.stageX, event.stageY);
-            if (elem instanceof Mirror) {
-                elem.rotateMirror();
-            }
-        }
-    }
+}
+function continueToNextLevel() {
+    createjs.Ticker.paused = true;
+    createLevel(++currentLevel);
+    stage.update();
 }
 var Direction;
 (function (Direction) {
@@ -434,6 +431,7 @@ var Laser = (function () {
             else if (currentField instanceof Detector) {
                 this._won = true;
                 this.direction = null;
+                continueToNextLevel();
             }
             else if (currentField instanceof Block) {
                 this.direction = null;
