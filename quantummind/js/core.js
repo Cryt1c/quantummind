@@ -200,14 +200,32 @@ function createLevel(level) {
             gamefield.add(new Mirror(stage, 2, 3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 4, 3, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Block(stage, 4, 5));
-            /*gamefield.add(new Block(stage, 5, 4));
-            gamefield.add(new Block(stage, 6, 4));*/
             gamefield.add(new Mirror(stage, 7, 3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 1, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 2, 5, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 6, 5, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 6, 4));
+            laser = new Laser(gamefield);
+            label.text = "You are now on your own - go for the Lasorz!!";
+            break;
+        case 9:
+            gamefield = new Field(9, 6);
+            var source = new Emitter(stage, 4, 0, Direction.South);
+            gamefield.setSource(source);
+            gamefield.add(new Mirror(stage, 2, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Block(stage, 4, 1));
+            gamefield.add(new Block(stage, 4, 2));
+            gamefield.add(new Block(stage, 4, 3));
+            gamefield.add(new Mirror(stage, 4, 5, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Block(stage, 3, 5));
+            gamefield.add(new Mirror(stage, 2, 5, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 2, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 7, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 7, 5, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 8, 5, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage, 8, 3, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Detector(stage, 0, 3));
             laser = new Laser(gamefield);
             label.text = "You are now on your own - go for the Lasorz!!";
             break;
