@@ -11,6 +11,7 @@ const QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
 var label;
+var pauseLabel;
 var currentLevel = 1;
 var gamefield;
 
@@ -18,7 +19,7 @@ function init() {
     document.onkeydown = keyPressed;
     stage = new createjs.Stage("demoCanvas");
     label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
-    var blinkShape = new createjs.Shape();
+    pauseLabel = new createjs.Text("The game is paused! Press 'p' to continue!", "20px Arial", "#ff0000");    var blinkShape = new createjs.Shape();
 
     QUEUE.loadFile({id: "detector", src: "./assets/detector.png"});
     QUEUE.loadFile({id: "mirror", src: "./assets/mirror.png"});
@@ -75,8 +76,12 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80: // 'p'
+                stage.removeChild(pauseLabel);
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
+                if(createjs.Ticker.paused)
+                    stage.addChild(pauseLabel);
+                stage.update();
                 break;
             case 83: // 's'
                 stage.update();
@@ -239,6 +244,7 @@ function createLevel(level:number) {
     stage.addChild(border);
 
     label.y = gamefield.height * FIELD_SIZE + 10;
+    pauseLabel.y = label.y + 100;
     stage.addChild(label);
     stage.update();
 }
