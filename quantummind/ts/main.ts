@@ -11,18 +11,15 @@ const QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
 var label;
-var pauseLabel;
 var currentLevel = 1;
 var gamefield;
 
 function init() {
     document.onkeydown = keyPressed;
     stage = new createjs.Stage("demoCanvas");
-    stage.y = 50;
     label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
-    pauseLabel = new createjs.Text("The game is paused! Press 'p' to continue!", "20px Arial", "#ff0000");
-    pauseLabel.y = -50;
     var blinkShape = new createjs.Shape();
+    blinkShape.graphics.beginFill("black").drawRect(0, 0, 500, 500);
 
     QUEUE.loadFile({id: "detector", src: "./assets/detector.png"});
     QUEUE.loadFile({id: "mirror", src: "./assets/mirror.png"});
@@ -79,13 +76,8 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80: // 'p'
-                stage.removeChild(pauseLabel);
                 createjs.Ticker.paused = !createjs.Ticker.paused;
                 console.log("pause");
-                if( createjs.Ticker.paused ){
-                    stage.addChild(pauseLabel);
-                }
-                stage.update();
                 break;
             case 83: // 's'
                 stage.update();
@@ -99,21 +91,14 @@ function init() {
                 console.log("reset");
                 break;
             case 32: // space
-                if( !createjs.Ticker.paused ) {
-                    laser.blink = !laser.blink;
-                    console.log(gamefield.lengthX() * FIELD_SIZE);
-                    console.log(gamefield.lengthY() * FIELD_SIZE);
-                    blinkShape.graphics.clear();
-                    blinkShape.graphics.beginFill("black").drawRect(0, 0, gamefield.lengthX() * FIELD_SIZE, gamefield.lengthY() * FIELD_SIZE);
-
-                    if (laser.blink) {
-                        stage.addChild(blinkShape);
-                    }
-                    else {
-                        stage.removeChild(blinkShape);
-                    }
-                    stage.update();
+                laser.blink = !laser.blink;
+                if (laser.blink) {
+                    stage.addChild(blinkShape);
                 }
+                else {
+                    stage.removeChild(blinkShape);
+                }
+                stage.update();
                 break;
         }
     }
@@ -205,6 +190,34 @@ function createLevel(level:number) {
             label.text = "Tunnel effect! You can pass trough blocks by switching to wave mode (press 'space'). " +
                 "But remember to switch back again! Otherwise the laser will also pass through the mirrors and the detector.";
             break;
+    /*
+        case 8:
+            gamefield = new Field(9,5);
+            var source = new Emitter(stage, 0,0, Direction.East);
+            gamefield.setSource(source);
+            gamefield.add(new Mirror(stage,1,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,2,0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,1,1, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,2,1, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,3,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,0,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Block(stage, 1, 2));
+            gamefield.add(new Mirror(stage,2,2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,3,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,4,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,0,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,1,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,2,3, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Block(stage, 3, 3));
+            gamefield.add(new Block(stage, 5, 3));
+            gamefield.add(new Block(stage, 6, 3));
+            gamefield.add(new Mirror(stage,4,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,1,4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,4,4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Detector(stage, 5,4));
+            laser = new Laser(gamefield);
+            label.text = "You are now on your own - go for the Lasorz!!";
+            break;*/
     }
 
     label.text += "\nPress 'p' to start or pause the game."
