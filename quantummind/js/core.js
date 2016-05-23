@@ -20,7 +20,6 @@ function init() {
     stage = new createjs.Stage("demoCanvas");
     label = new createjs.Text("Press 'p' to start or pause the game.", "20px Arial", "#000000");
     var blinkShape = new createjs.Shape();
-    blinkShape.graphics.beginFill("black").drawRect(0, 0, 500, 500);
     QUEUE.loadFile({ id: "detector", src: "./assets/detector.png" });
     QUEUE.loadFile({ id: "mirror", src: "./assets/mirror.png" });
     QUEUE.loadFile({ id: "mirror2", src: "./assets/mirror2.png" });
@@ -82,14 +81,18 @@ function init() {
                 console.log("reset");
                 break;
             case 32:
-                laser.blink = !laser.blink;
-                if (laser.blink) {
-                    stage.addChild(blinkShape);
+                if (!createjs.Ticker.paused) {
+                    laser.blink = !laser.blink;
+                    blinkShape.graphics.clear();
+                    blinkShape.graphics.beginFill("black").drawRect(0, 0, gamefield.lengthX() * FIELD_SIZE, gamefield.lengthY() * FIELD_SIZE);
+                    if (laser.blink) {
+                        stage.addChild(blinkShape);
+                    }
+                    else {
+                        stage.removeChild(blinkShape);
+                    }
+                    stage.update();
                 }
-                else {
-                    stage.removeChild(blinkShape);
-                }
-                stage.update();
                 break;
         }
     }
