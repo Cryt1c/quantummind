@@ -190,34 +190,36 @@ function createLevel(level:number) {
             label.text = "Tunnel effect! You can pass trough blocks by switching to wave mode (press 'space'). " +
                 "But remember to switch back again! Otherwise the laser will also pass through the mirrors and the detector.";
             break;
-    /*
+
         case 8:
-            gamefield = new Field(9,5);
+            gamefield = new Field(9,6);
             var source = new Emitter(stage, 0,0, Direction.East);
             gamefield.setSource(source);
-            gamefield.add(new Mirror(stage,1,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Mirror(stage,2,0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,2,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,4,0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage,1,1, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Mirror(stage,2,1, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage,3,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,3,1, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,5,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage,0,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Block(stage, 1, 2));
+            gamefield.add(new Block(stage, 2, 4));
             gamefield.add(new Mirror(stage,2,2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage,3,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage,4,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Mirror(stage,6,2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage,0,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage,1,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Mirror(stage,2,3, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
-            gamefield.add(new Block(stage, 3, 3));
-            gamefield.add(new Block(stage, 5, 3));
-            gamefield.add(new Block(stage, 6, 3));
-            gamefield.add(new Mirror(stage,4,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,2,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,4,3, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
+            gamefield.add(new Block(stage, 4, 5));
+            /*gamefield.add(new Block(stage, 5, 4));
+            gamefield.add(new Block(stage, 6, 4));*/
+            gamefield.add(new Mirror(stage,7,3, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage,1,4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage,4,4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
-            gamefield.add(new Detector(stage, 5,4));
+            gamefield.add(new Mirror(stage,2,5, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Mirror(stage,6,5, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
+            gamefield.add(new Detector(stage, 6,4));
             laser = new Laser(gamefield);
             label.text = "You are now on your own - go for the Lasorz!!";
-            break;*/
+            break;
     }
 
     label.text += "\nPress 'p' to start or pause the game."
