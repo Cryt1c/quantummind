@@ -13,7 +13,7 @@ var QUEUE = new createjs.LoadQueue(false);
 var stage;
 var laser;
 var label;
-var currentLevel = 8;
+var currentLevel = 1;
 var gamefield;
 function init() {
     document.onkeydown = keyPressed;
