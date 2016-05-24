@@ -28,6 +28,7 @@ function init() {
     QUEUE.loadFile({ id: "emitter", src: "./assets/emitter.png" });
     QUEUE.loadFile({ id: "emitter2", src: "./assets/emitter2.png" });
     QUEUE.loadFile({ id: "block", src: "./assets/block.png" });
+    QUEUE.loadFile({ id: "pause", src: "./assets/pause.png" });
     QUEUE.on("complete", startGame);
     function startGame() {
         label.lineWidth = 500;
@@ -44,7 +45,7 @@ function init() {
             }
         }
         createLevel(currentLevel);
-        createjs.Ticker.paused = true;
+        pauseGame(true);
         createjs.Ticker.addEventListener("tick", handleTick);
         function handleTick(event) {
             if (!createjs.Ticker.paused) {
@@ -53,12 +54,12 @@ function init() {
                 stage.update();
                 if (laser.won) {
                     //console.log("won");
-                    createjs.Ticker.paused = true;
+                    pauseGame(true);
                     continueToNextLevel();
                 }
                 else if (laser.gameOver) {
                     //console.log("gameover");
-                    createjs.Ticker.paused = true;
+                    pauseGame(true);
                     label.text = "Game over! Press 'r' to restart the level.";
                     stage.update();
                 }
@@ -69,11 +70,7 @@ function init() {
         //console.log(event.keyCode);
         switch (event.keyCode) {
             case 80:
-                stage.removeChild(pauseLabel);
-                createjs.Ticker.paused = !createjs.Ticker.paused;
-                console.log("pause");
-                if (createjs.Ticker.paused)
-                    stage.addChild(pauseLabel);
+                pauseGame(!createjs.Ticker.paused);
                 stage.update();
                 break;
             case 83:
@@ -82,7 +79,7 @@ function init() {
                 break;
             case 82:
                 laser.blink = false;
-                createjs.Ticker.paused = true;
+                pauseGame(true);
                 createLevel(currentLevel);
                 stage.update();
                 console.log("reset");
@@ -244,10 +241,16 @@ function createLevel(level) {
     label.y = gamefield.height * FIELD_SIZE + 10;
     pauseLabel.y = label.y + 100;
     stage.addChild(label);
+    stage.addChild(pauseLabel);
     stage.update();
 }
 function continueToNextLevel() {
     createLevel(++currentLevel);
+    stage.update();
+}
+function pauseGame(paused) {
+    createjs.Ticker.paused = paused;
+    pauseLabel.visible = paused;
     stage.update();
 }
 var Direction;
