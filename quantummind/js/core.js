@@ -227,6 +227,13 @@ function createLevel(level) {
             laser = new Laser(gamefield);
             label.text = "You are now on your own - go for the Lasorz!!";
             break;
+        case 10:
+            gamefield = new Field(6, 1);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
+            gamefield.setSource(source);
+            laser = new Laser(gamefield);
+            label.text = "The Fridge is a lie ;)";
+            break;
     }
     label.text += "\nPress 'p' to start or pause the game.";
     gamefield.render(stage);
