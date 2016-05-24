@@ -171,7 +171,7 @@ function createLevel(level:number) {
             gamefield.add(new Block(stage, 6, 0));
             gamefield.add(new Detector(stage, 8, 4));
             laser = new Laser(gamefield);
-            label.text = "Blocks hinder the path of the laser. Try to go around blocks.";
+            label.text = "Blocks (Gandalf on the top ;) ) hinder the path of the laser. Try to go around blocks.";
             break;
 
         case 6:
