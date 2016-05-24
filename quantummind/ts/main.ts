@@ -25,6 +25,7 @@ function init() {
     QUEUE.loadFile({id: "mirror", src: "./assets/mirror.png"});
     QUEUE.loadFile({id: "mirror2", src: "./assets/mirror2.png"});
     QUEUE.loadFile({id: "emitter", src: "./assets/emitter.png"});
+    QUEUE.loadFile({id: "emitter2", src: "./assets/emitter2.png"});
     QUEUE.loadFile({id: "block", src: "./assets/block.png"});
     QUEUE.on("complete", startGame);
 
@@ -118,7 +119,7 @@ function createLevel(level:number) {
     switch (level) {
         case 1:
             gamefield = new Field(6, 1);
-            var source = new Emitter(stage, 0, 0, Direction.East);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Detector(stage, 5, 0));
             laser = new Laser(gamefield);
@@ -128,7 +129,7 @@ function createLevel(level:number) {
 
         case 2:
             gamefield = new Field(9, 3);
-            var source = new Emitter(stage, 0, 0, Direction.East);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
@@ -138,7 +139,7 @@ function createLevel(level:number) {
 
         case 3:
             gamefield = new Field(9, 3);
-            var source = new Emitter(stage, 0, 0, Direction.East);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Detector(stage, 8, 2));
@@ -148,7 +149,7 @@ function createLevel(level:number) {
 
         case 4:
             gamefield = new Field(9, 6);
-            var source = new Emitter(stage, 0, 0, Direction.East);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage, 8, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 2, 2, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
@@ -160,7 +161,7 @@ function createLevel(level:number) {
 
         case 5:
             gamefield = new Field(9, 9);
-            var source = new Emitter(stage, 0, 4, Direction.East);
+            var source = new Emitter(stage, 0, 4, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage, 4, 4, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
             gamefield.add(new Mirror(stage, 4, 0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
@@ -175,7 +176,7 @@ function createLevel(level:number) {
 
         case 6:
             gamefield = new Field(9, 5);
-            var source = new Emitter(stage, 0, 0, Direction.East);
+            var source = new Emitter(stage, 0, 0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage, 3, 0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage, 0, 2, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
@@ -190,7 +191,7 @@ function createLevel(level:number) {
 
         case 7:
             gamefield = new Field(9, 3);
-            var source = new Emitter(stage, 0, 1, Direction.East);
+            var source = new Emitter(stage, 0, 1, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Block(stage, 4, 1));
             gamefield.add(new Detector(stage, 8, 1));
@@ -201,7 +202,7 @@ function createLevel(level:number) {
 
         case 8:
             gamefield = new Field(9,6);
-            var source = new Emitter(stage, 0,0, Direction.East);
+            var source = new Emitter(stage, 0,0, Direction.East, 0);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage,2,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Mirror(stage,4,0, MirrorOrientation.BOTTOM_LEFT_TO_TOP_RIGHT));
@@ -229,7 +230,7 @@ function createLevel(level:number) {
 
         case 9:
             gamefield = new Field(9,6);
-            var source = new Emitter(stage, 4,0, Direction.South);
+            var source = new Emitter(stage, 4,0, Direction.South, 1);
             gamefield.setSource(source);
             gamefield.add(new Mirror(stage,2,0, MirrorOrientation.TOP_LEFT_TO_BOTTOM_RIGHT));
             gamefield.add(new Block(stage, 4, 1));
